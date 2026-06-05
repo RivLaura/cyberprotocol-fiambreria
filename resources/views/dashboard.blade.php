@@ -14,4 +14,6 @@
             </div>
         </div>
     </div>
+
+    <x-⚡contador />
 </x-app-layout>
