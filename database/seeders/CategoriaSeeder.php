@@ -23,6 +23,7 @@ class CategoriaSeeder extends Seeder
         foreach ($categorias as $nombre) {
             Categoria::create([
                 'nombre' => $nombre,
+                'descripcion' => null,
             ]);
         }
     }
