@@ -4,9 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illiminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Categoria extends Model
 {
+    use HasFactory;
+    
     protected $table = 'categorias';
 
     protected $fillable = [
