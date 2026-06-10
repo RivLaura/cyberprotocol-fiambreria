@@ -12,7 +12,7 @@ class CategoriaRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,7 +23,7 @@ class CategoriaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nombre' => 'required|max:100|unique:categorias,nombre',
         ];
     }
 }
