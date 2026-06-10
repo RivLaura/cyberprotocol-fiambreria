@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\CategoriaRequest;
+use App\Models\Categoria;
 
 class CategoriaController extends Controller
 {
@@ -25,9 +26,15 @@ class CategoriaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CategoriaRequest $request)
     {
-        //
+        Categoria::create([
+            'nombre' => $request->nombre,
+        ]);
+
+        return redirect()
+            ->route('categorias.index')
+            ->with('success', 'Categoría creada correctamente.');
     }
 
     /**
@@ -49,7 +56,7 @@ class CategoriaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(string $id)
     {
         //
     }
