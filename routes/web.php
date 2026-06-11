@@ -18,6 +18,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/categorias', [CategoriaController::class, 'index'])
     ->name('categorias.index');
+
+    
 });
 
 require __DIR__.'/auth.php';
