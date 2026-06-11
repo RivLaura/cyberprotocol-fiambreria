@@ -11,9 +11,11 @@ class CategoriaController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        //
-    }
+{
+    $categorias = Categoria::all();
+
+    return view('categorias.index', compact('categorias'));
+}
 
     /**
      * Show the form for creating a new resource.
