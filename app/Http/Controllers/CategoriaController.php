@@ -22,7 +22,7 @@ class CategoriaController extends Controller
      */
     public function create()
     {
-        //
+        return view('categorias.create');
     }
 
     /**
@@ -32,6 +32,7 @@ class CategoriaController extends Controller
     {
         Categoria::create([
             'nombre' => $request->nombre,
+            'descripcion' => $request->descripcion,
         ]);
 
         return redirect()
