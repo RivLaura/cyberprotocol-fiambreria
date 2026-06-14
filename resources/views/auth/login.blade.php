@@ -48,16 +48,16 @@
         </div>
 
         <!-- Recordame -->
-        <div class="flex items-center justify-between text-sm pt-1">
+        <div class="block mt-4">
             <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class= "rounded border-gray-300 text-amber-600 focus:ring-amber-500 shadow-smw-4 h-4" name="remember">
-                <span class="ms-2 text-xs md:text-sm text-gray-600 font-sans">{{ __('Recordarme') }}</span>
+                <input id="remember_me" type="checkbox" class= "md:hidden font-sans font-bold text-gray-400 mr-2" name="remember">
+                <span class="ms-2 text-sm text-gray-600">{{ __('Recordarme') }}</span>
             </label>
         </div>
 
         <div class="flex items-center justify-end mt-4">
             @if (Route::has('password.request'))
-                <a class="text-xs md:text-sm text-amber-800 hover:text-amber-950 font-medium underline transition-colors duration-150"
+                <a class="inline-flex items-center px-5 py-2.5 bg-amber-500 hover:bg-amber-400 text-amber-950 text-sm font-bold rounded-lg shadow-md hover:shadow-amber-500/20 transform hover:-translate-y-0.5 transition-all duration-200"
                  href="{{ route('password.request') }}">
                     {{ __('¿Olvido su contraseña?') }}
                 </a>
