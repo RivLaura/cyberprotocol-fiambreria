@@ -39,14 +39,20 @@
                         </x-dropdown-link>
 
                         <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
+                        <form method="POST" action="{{ route('logout') }}" class="block w-full p-1">
                             @csrf
+                            <button type="submit"
+                                onclick="event.preventDefault(); this.closest('form').submit();"
+                                class="w-full flex items-center justify-between text-left px-4 py-2 text-sm leading-5 text-amber-950 hover:text-white bg-transparent hover:bg-amber-700 rounded-lg transition-all duration-150 group">
+                                <span class="font-sans font-medium">
+                                    {{ __('Cerrar Sesión') }}
+                                </span>
+                                <!-- Icono de puerta de salida (SVG) -->
+                                <svg class="w-4 h-4 text-amber-800 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                </svg>
 
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('Cerrar sesión') }}
-                            </x-dropdown-link>
+                            </button>
                         </form>
                     </x-slot>
                 </x-dropdown>
@@ -85,14 +91,23 @@
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}">
+                <form method="POST" action="{{ route('logout') }}" class="px-2 pt-2 pb-1">
                     @csrf
+                    <button type="submit"
+                        onclick="event.preventDefault(); this.closest('form').submit();"
+                        class="w-full flex items-center justify-between px-4 py-2.5 bg-amber-50/60 hover:bg-amber-700 text-amber-950 hover:text-white font-medium text-sm rounded-xl border border-amber-200/40 shadow-sm transition-all duration-150 group">
 
-                    <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
-                                        this.closest('form').submit();">
-                        {{ __('Log Out') }}
-                    </x-responsive-nav-link>
+                        <!-- Texto del enlace -->
+                        <span class="font-sans tracking-wide">
+                            {{ __('Cerrar Sesión') }}
+                        </span>
+
+                        <!-- Icono minimalista de puerta de salida (SVG) -->
+                        <svg class="w-4 h-4 text-amber-800 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                        </svg>
+
+                    </button>
                 </form>
             </div>
         </div>
