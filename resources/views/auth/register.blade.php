@@ -13,6 +13,7 @@
                         {{ __('Crea una cuenta para registrar un nuevo usuario administrador') }}
                     </p>
                 </div>
+                
                 <div class="absolute inset-0 bg-black/10 pointer-events-none"></div>
             </div>
             <div class="p-6 sm:p-8 md:p-12 flex flex-col justify-center bg-amber-50/60 border-l border-amber-100/50">
