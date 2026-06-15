@@ -51,24 +51,35 @@ class CategoriaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+   public function edit(Categoria $categoria)
     {
-        //
+        return view('categorias.edit', compact('categoria'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(string $id)
+    public function update(CategoriaRequest $request, Categoria $categoria)
     {
-        //
+        $categoria->update([
+            'nombre' => $request->nombre,
+            'descripcion' => $request->descripcion,
+        ]);
+
+        return redirect()
+            ->route('categorias.index')
+            ->with('success', 'Categoría actualizada correctamente.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Categoria $categoria)
     {
-        //
+        $categoria->delete();
+
+        return redirect()
+            ->route('categorias.index')
+            ->with('success', 'Categoría eliminada correctamente.');
     }
 }
