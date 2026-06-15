@@ -59,9 +59,16 @@ class CategoriaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(string $id)
+    public function update(CategoriaRequest $request, Categoria $categoria)
     {
-        //
+        $categoria->update([
+            'nombre' => $request->nombre,
+            'descripcion' => $request->descripcion,
+        ]);
+
+        return redirect()
+            ->route('categorias.index')
+            ->with('success', 'Categoría actualizada correctamente.');
     }
 
     /**

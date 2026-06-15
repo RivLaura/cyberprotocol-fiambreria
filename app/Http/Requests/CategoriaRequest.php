@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule; 
 
 class CategoriaRequest extends FormRequest
 {
@@ -23,7 +24,17 @@ class CategoriaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nombre' => 'required|max:100|unique:categorias,nombre',
+            'nombre' => [
+                'required',
+                'max:100',
+                Rule::unique('categorias', 'nombre')
+                    ->ignore($this->categoria),
+            ],
+
+            'descripcion' => [
+                'nullable',
+                'max:255',
+            ],
         ];
     }
 }
