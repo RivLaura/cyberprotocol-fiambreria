@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\ProductoController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -35,6 +36,17 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/categorias/{categoria}', [CategoriaController::class, 'destroy'])
         ->name('categorias.destroy');
+
+
+        // Productos
+    Route::get('/productos', [ProductoController::class, 'index'])
+        ->name('productos.index');
+
+    Route::get('/productos/crear', [ProductoController::class, 'create'])
+        ->name('productos.create');
+
+    Route::post('/productos', [ProductoController::class, 'store'])
+        ->name('productos.store');
 });
     
 

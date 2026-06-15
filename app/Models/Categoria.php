@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Categoria extends Model
 {
     use HasFactory;
-    
+
     protected $table = 'categorias';
 
     protected $fillable = [
