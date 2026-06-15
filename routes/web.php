@@ -26,6 +26,9 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/categorias', [CategoriaController::class, 'store'])
         ->name('categorias.store');
+
+    Route::get('/categorias/{categoria}/editar', [CategoriaController::class, 'edit'])
+    ->name('categorias.edit');
 });
     
 
