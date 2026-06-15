@@ -93,7 +93,7 @@
                                             Editar
                                         </a>
 
-                                        <form action="{{ route('categorias.store', $categoria->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar esta categoría?')" class="inline-block">
+                                        <form action="{{ route('categorias.destroy', $categoria->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar esta categoría?')" class="inline-block">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="inline-flex items-center px-3.5 py-2 bg-white text-red-600 hover:bg-red-50 rounded-lg border border-gray-200 hover:border-red-200 shadow-sm transition-all duration-150">
