@@ -59,10 +59,14 @@ class ProductoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
-    {
-        //
-    }
+  public function edit(string $id)
+{
+    $producto = Producto::findOrFail($id);
+
+    $categorias = Categoria::all();
+
+    return view('productos.edit', compact('producto', 'categorias'));
+}
 
     /**
      * Update the specified resource in storage.
