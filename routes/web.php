@@ -47,6 +47,9 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/productos', [ProductoController::class, 'store'])
         ->name('productos.store');
+
+        Route::delete('/productos/{producto}', [ProductoController::class, 'destroy'])
+    ->name('productos.destroy');
 });
     
 
