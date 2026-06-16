@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductoRequest;
 use App\Models\Producto;
 use Illuminate\Http\Request;
+use App\Models\Categoria;
 
 class ProductoController extends Controller
 {
@@ -19,10 +20,12 @@ class ProductoController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
-    }
+   public function create()
+{
+    $categorias = Categoria::all();
+
+    return view('productos.create', compact('categorias'));
+}
 
     /**
      * Store a newly created resource in storage.
