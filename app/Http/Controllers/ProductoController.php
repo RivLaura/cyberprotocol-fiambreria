@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductoRequest;
 use App\Models\Producto;
-use Illuminate\Http\Request;
 use App\Models\Categoria;
 
 class ProductoController extends Controller
@@ -30,7 +29,7 @@ class ProductoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-   public function store( $request)
+   public function store(ProductoRequest $request)
 {
     Producto::create([
         'nombre' => $request->nombre,
@@ -71,10 +70,25 @@ class ProductoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+   public function update(ProductoRequest $request, string $id)
+{
+    $producto = Producto::findOrFail($id);
+
+    $producto->update([
+        'nombre' => $request->nombre,
+        'descripcion' => $request->descripcion,
+        'precio' => $request->precio,
+        'stock' => $request->stock,
+        'stock_minimo' => $request->stock_minimo,
+        'fecha_elaboracion' => $request->fecha_elaboracion,
+        'fecha_vencimiento' => $request->fecha_vencimiento,
+        'categoria_id' => $request->categoria_id,
+    ]);
+
+    return redirect()
+        ->route('productos.index')
+        ->with('success', 'Producto actualizado correctamente.');
+}
 
     /**
      * Remove the specified resource from storage.
