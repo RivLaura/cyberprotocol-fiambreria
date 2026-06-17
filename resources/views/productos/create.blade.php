@@ -14,6 +14,7 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         
+                        {{-- Campo: Nombre --}}
                         <div>
                             <label for="nombre" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nombre del Producto</label>
                             <input type="text" name="nombre" id="nombre" value="{{ old('nombre') }}" maxlength="100" required
@@ -21,8 +22,12 @@
                             @error('nombre') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                         </div>
 
+                        {{-- Campo: Categoría (Corregido y Limpio) --}}
                         <div>
+                            <!-- MODIFICACIÓN TÉCNICA EN CREATE.BLADE.PHP PARA TRAZABILIDAD DE JIRA -->
                             <label for="categoria_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Categoría</label>
+                            
+                            {{-- Selector de categoria asociado al requerimiento FIAMB-96 --}}
                             <select name="categoria_id" id="categoria_id" required
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                                 <option value="">Seleccione una categoría</option>
@@ -35,6 +40,7 @@
                             @error('categoria_id') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                         </div>
 
+                        {{-- Campo: Precio --}}
                         <div>
                             <label for="precio" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Precio ($)</label>
                             <input type="number" step="0.01" min="0" name="precio" id="precio" value="{{ old('precio') }}" required
@@ -42,6 +48,7 @@
                             @error('precio') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                         </div>
 
+                        {{-- Campo: Stock Inicial --}}
                         <div>
                             <label for="stock" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Stock Inicial</label>
                             <input type="number" min="0" name="stock" id="stock" value="{{ old('stock', 0) }}" required
@@ -49,6 +56,7 @@
                             @error('stock') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                         </div>
 
+                        {{-- Campo: Stock Mínimo --}}
                         <div>
                             <label for="stock_minimo" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Stock Mínimo (Alerta)</label>
                             <input type="number" min="0" name="stock_minimo" id="stock_minimo" value="{{ old('stock_minimo', 5) }}" required
@@ -56,6 +64,7 @@
                             @error('stock_minimo') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                         </div>
 
+                        {{-- Campo: Fecha Elaboración --}}
                         <div>
                             <label for="fecha_elaboracion" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Fecha de Elaboración</label>
                             <input type="date" name="fecha_elaboracion" id="fecha_elaboracion" value="{{ old('fecha_elaboracion') }}" required
@@ -63,6 +72,7 @@
                             @error('fecha_elaboracion') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                         </div>
 
+                        {{-- Campo: Fecha Vencimiento --}}
                         <div>
                             <label for="fecha_vencimiento" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Fecha de Vencimiento</label>
                             <input type="date" name="fecha_vencimiento" id="fecha_vencimiento" value="{{ old('fecha_vencimiento') }}" required
@@ -71,6 +81,7 @@
                         </div>
                     </div>
 
+                    {{-- Campo: Descripción --}}
                     <div class="mt-4">
                         <label for="descripcion" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Descripción u Observaciones (Opcional)</label>
                         <textarea name="descripcion" id="descripcion" rows="3"
@@ -78,6 +89,7 @@
                         @error('descripcion') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                     </div>
 
+                    {{-- Botonera de Control --}}
                     <div class="flex justify-end space-x-3 pt-4 border-t border-gray-200 dark:border-gray-700">
                         <a href="{{ route('productos.index') }}" 
                            class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-md shadow-sm transition dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600">
