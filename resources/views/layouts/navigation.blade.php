@@ -21,11 +21,10 @@
                         Categorías
                     </x-nav-link>
 
-                    <a href="#"
-                    class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700">
+                    <!-- TRAZABILIDAD JIRA: FIAMB-97 - Enlace dinámico al módulo de Productos -->
+                    <x-nav-link :href="route('productos.index')" :active="request()->routeIs('productos.*')">
                         Productos
-                        <span class="ml-1 text-xs text-amber-600">(Próx.)</span>
-                    </a>
+                    </x-nav-link>
 
                     <a href="#"
                     class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700">
@@ -51,8 +50,9 @@
                     </x-slot>
 
                     <x-slot name="content">
+                        <!-- Corregido: Texto plano en español -->
                         <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Perfil') }}
+                            Perfil
                         </x-dropdown-link>
 
                         <!-- Authentication -->
@@ -62,7 +62,7 @@
                                 onclick="event.preventDefault(); this.closest('form').submit();"
                                 class="w-full flex items-center justify-between text-left px-4 py-2 text-sm leading-5 text-amber-950 hover:text-white bg-transparent hover:bg-amber-700 rounded-lg transition-all duration-150 group">
                                 <span class="font-sans font-medium">
-                                    {{ __('Cerrar Sesión') }}
+                                    Cerrar Sesión
                                 </span>
                                 <!-- Icono de puerta de salida (SVG) -->
                                 <svg class="w-4 h-4 text-amber-800 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -99,10 +99,10 @@
                 Categorías
             </x-nav-link>
 
-            <a href="#"
-            class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700">
+            <!-- TRAZABILIDAD JIRA: FIAMB-97 - Menú responsivo de Productos -->
+            <x-nav-link :href="route('productos.index')" :active="request()->routeIs('productos.*')">
                 Productos
-            </a>
+            </x-nav-link>
 
             <a href="#"
             class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700">
@@ -119,8 +119,9 @@
             </div>
 
             <div class="mt-3 space-y-1">
+                <!-- Corregido: Texto plano en español -->
                 <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Perfil') }}
+                    Perfil
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->
@@ -130,9 +131,9 @@
                         onclick="event.preventDefault(); this.closest('form').submit();"
                         class="w-full flex items-center justify-between px-4 py-2.5 bg-amber-50/60 hover:bg-amber-700 text-amber-950 hover:text-white font-medium text-sm rounded-xl border border-amber-200/40 shadow-sm transition-all duration-150 group">
 
-                        <!-- Texto del enlace -->
+                        <!-- Texto del enlace corregido -->
                         <span class="font-sans tracking-wide">
-                            {{ __('Cerrar Sesión') }}
+                            Cerrar Sesión
                         </span>
 
                         <!-- Icono minimalista de puerta de salida (SVG) -->
