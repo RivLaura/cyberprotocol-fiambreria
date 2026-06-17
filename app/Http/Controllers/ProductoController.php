@@ -11,12 +11,21 @@ class ProductoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $productos = Producto::with('categoria')->get();
+ public function index()
+{
+    $productos = Producto::with('categoria')->get();
 
-        return view('productos.index', compact('productos'));
-    }
+    $productosStockBajo = Producto::whereColumn(
+        'stock',
+        '<=',
+        'stock_minimo'
+    )->get();
+
+    return view('productos.index', compact(
+        'productos',
+        'productosStockBajo'
+    ));
+}
 
     /**
      * Show the form for creating a new resource.
