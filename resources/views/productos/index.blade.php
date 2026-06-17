@@ -9,6 +9,12 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
                 
+                @if (session('success'))
+                    <div class="mb-4 p-4 text-sm text-green-700 bg-green-100 dark:bg-green-900 dark:text-green-300 rounded-lg" role="alert">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
                 <div class="mb-6 flex justify-end">
                     <a href="{{ route('productos.create') }}" 
                        class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md shadow-sm transition">
@@ -42,10 +48,23 @@
                                         {{ $producto->fecha_vencimiento ? \Carbon\Carbon::parse($producto->fecha_vencimiento)->format('d/m/Y') : 'No vence' }}
                                     </td>
                                     <td class="p-3 text-center">
-                                        <a href="{{ route('productos.edit', $producto->id) }}" 
-                                           class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 font-semibold transition">
-                                            Editar
-                                        </a>
+                                        <div class="flex items-center justify-center space-x-4">
+                                            <a href="{{ route('productos.edit', $producto->id) }}" 
+                                               class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 font-semibold transition">
+                                                Editar
+                                            </a>
+
+                                            <form action="{{ route('productos.destroy', $producto->id) }}" method="POST" 
+                                                  onsubmit="return confirm('¿Estás seguro de que deseas eliminar este producto? Esta acción no se puede deshacer.');" 
+                                                  class="inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" 
+                                                        class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300 font-semibold transition bg-transparent border-0 p-0 cursor-pointer">
+                                                    Eliminar
+                                                </button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                             @empty
