@@ -20,9 +20,11 @@
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                             @error('nombre') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                         </div>
-
+                        <!-- MODIFICACIÓN TÉCNICA DEN CREATE.BLADE.PHP PARA TRAZABILIDAD DE JIRA -->
                         <div>
                             <label for="categoria_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Categoría</label>
+
+                            {{-- Selector de categoria asiciado al requerimiento FIAMB-96 --}}
                             <select name="categoria_id" id="categoria_id" required
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                                 <option value="">Seleccione una categoría</option>
