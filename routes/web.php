@@ -48,8 +48,16 @@ Route::middleware('auth')->group(function () {
     Route::post('/productos', [ProductoController::class, 'store'])
         ->name('productos.store');
 
+    // NUEVA RUTA 1: Muestra el formulario de edición (FIAMB-100)
+    Route::get('/productos/{id}/editar', [ProductoController::class, 'edit'])
+        ->name('productos.edit');
+
+    // NUEVA RUTA 2: Procesa la actualización en la base de datos (FIAMB-100)
+    Route::put('/productos/{id}', [ProductoController::class, 'update'])
+        ->name('productos.update');
+
     Route::delete('/productos/{producto}', [ProductoController::class, 'destroy'])
         ->name('productos.destroy');
-}); 
+});
 
 require __DIR__.'/auth.php';

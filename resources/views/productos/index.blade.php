@@ -28,6 +28,7 @@
                                 <th class="p-3 text-right">Precio</th>
                                 <th class="p-3 text-center">Stock</th>
                                 <th class="p-3 text-center">Vencimiento</th>
+                                <th class="p-3 text-center">Acciones</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
@@ -40,10 +41,16 @@
                                     <td class="p-3 text-center">
                                         {{ $producto->fecha_vencimiento ? \Carbon\Carbon::parse($producto->fecha_vencimiento)->format('d/m/Y') : 'No vence' }}
                                     </td>
+                                    <td class="p-3 text-center">
+                                        <a href="{{ route('productos.edit', $producto->id) }}" 
+                                           class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 font-semibold transition">
+                                            Editar
+                                        </a>
+                                    </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="p-6 text-center text-gray-400 dark:text-gray-500">
+                                    <td colspan="6" class="p-6 text-center text-gray-400 dark:text-gray-500">
                                         No hay productos registrados en el inventario.
                                     </td>
                                 </tr>
