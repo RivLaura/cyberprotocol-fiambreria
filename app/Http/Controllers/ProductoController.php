@@ -11,20 +11,16 @@ class ProductoController extends Controller
     /**
      * Display a listing of the resource.
      */
- public function index()
+    public function index()
 {
+    // 1. Buscamos todos los productos con su categoría
     $productos = Producto::with('categoria')->get();
 
-    $productosStockBajo = Producto::whereColumn(
-        'stock',
-        '<=',
-        'stock_minimo'
-    )->get();
+    // 2. Buscamos los productos cuyo stock es menor o igual al stock_minimo configurado
+    $productosStockBajo = Producto::whereRaw('stock <= stock_minimo', [], 'and')->get();
 
-    return view('productos.index', compact(
-        'productos',
-        'productosStockBajo'
-    ));
+    // 3. Enviamos ambas variables a la vista de productos
+    return view('productos.index', compact('productos', 'productosStockBajo'));
 }
 
     /**

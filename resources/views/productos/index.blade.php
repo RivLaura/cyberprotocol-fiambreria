@@ -8,18 +8,44 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
-                
+                @if ($productosStockBajo->count() > 0)
+                    <div
+                        class="mb-6 p-4 bg-orange-100 dark:bg-orange-900 border-l-4 border-orange-500 text-orange-700 dark:text-orange-200 rounded-r-lg shadow-sm">
+                        <div class="flex items-center mb-2">
+                            <svg class="w-5 h-5 mr-2 text-orange-500" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+                                </path>
+                            </svg>
+                            <h3 class="font-bold text-base">Alerta: ¡Productos con Stock Bajo o Crítico!</h3>
+                        </div>
+                        <ul class="list-disc pl-5 text-sm space-y-1">
+                            @foreach ($productosStockBajo as $prod)
+                                <li>
+                                    El producto <span
+                                        class="font-semibold text-gray-900 dark:text-white">{{ $prod->nombre }}</span>
+                                    tiene solo <span
+                                        class="font-bold text-red-600 dark:text-red-400">{{ $prod->stock }}
+                                        unidades</span> disponibles (Mínimo requerido: {{ $prod->stock_minimo }} u.).
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 @if (session('success'))
-                    <div class="mb-4 p-4 text-sm text-green-700 bg-green-100 dark:bg-green-900 dark:text-green-300 rounded-lg" role="alert">
+                    <div class="mb-4 p-4 text-sm text-green-700 bg-green-100 dark:bg-green-900 dark:text-green-300 rounded-lg"
+                        role="alert">
                         {{ session('success') }}
                     </div>
                 @endif
 
                 <div class="mb-6 flex justify-end">
-                    <a href="{{ route('productos.create') }}" 
-                       class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md shadow-sm transition">
+                    <a href="{{ route('productos.create') }}"
+                        class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md shadow-sm transition">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4">
+                            </path>
                         </svg>
                         Registrar Nuevo Producto
                     </a>
@@ -28,7 +54,8 @@
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                         <thead>
-                            <tr class="text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                            <tr
+                                class="text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
                                 <th class="p-3">Producto</th>
                                 <th class="p-3">Categoría</th>
                                 <th class="p-3 text-right">Precio</th>
@@ -49,18 +76,19 @@
                                     </td>
                                     <td class="p-3 text-center">
                                         <div class="flex items-center justify-center space-x-4">
-                                            <a href="{{ route('productos.edit', $producto->id) }}" 
-                                               class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 font-semibold transition">
+                                            <a href="{{ route('productos.edit', $producto->id) }}"
+                                                class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 font-semibold transition">
                                                 Editar
                                             </a>
 
-                                            <form action="{{ route('productos.destroy', $producto->id) }}" method="POST" 
-                                                  onsubmit="return confirm('¿Estás seguro de que deseas eliminar este producto? Esta acción no se puede deshacer.');" 
-                                                  class="inline">
+                                            <form action="{{ route('productos.destroy', $producto->id) }}"
+                                                method="POST"
+                                                onsubmit="return confirm('¿Estás seguro de que deseas eliminar este producto? Esta acción no se puede deshacer.');"
+                                                class="inline">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" 
-                                                        class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300 font-semibold transition bg-transparent border-0 p-0 cursor-pointer">
+                                                <button type="submit"
+                                                    class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300 font-semibold transition bg-transparent border-0 p-0 cursor-pointer">
                                                     Eliminar
                                                 </button>
                                             </form>
