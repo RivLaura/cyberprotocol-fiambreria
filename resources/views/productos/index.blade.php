@@ -82,12 +82,19 @@
                                     <span class="text-base md:text-sm font-mono font-bold text-gray-900">${{ number_format($producto->precio, 2) }}</span>
                                 </td>
 
-                                <td class="px-5 py-2 md:px-6 md:py-4 block md:table-cell w-1/2 md:w-auto">
-                                    <span class="md:hidden block text-[10px] font-sans font-bold tracking-wider text-amber-900/50 uppercase mb-0.5">Stock Disponible</span>
-                                    <span class="md:hidden inline-flex items-center px-2 py-0.5 rounded-md text-xs font-mono font-medium bg-gray-50 text-gray-700 border border-gray-200/60">
-                                        {{ $producto->stock }} u.
-                                    </span>
-                                    <span class="hidden md:inline text-sm text-gray-600 font-mono">{{ $producto->stock }} u.</span>
+                                <td class="px-5 py-2 md:px-6 md:py-4 block md:table-cell">
+                                    @if($producto->stock <= $producto->stock_minimo)
+                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 animate-pulse">
+                                            <svg class="w-4 h-4 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+                                            </svg>
+                                            {{ $producto->stock }} u. (Crítico)
+                                        </span>
+                                        @else
+                                        <span class="text-base font-mono text-gray-900">
+                                            {{ $producto->stock }} u.
+                                        </span>
+                                        @endif
                                 </td>
                             </div>
 
@@ -116,8 +123,8 @@
                                         @method('DELETE')
 
                                         <button type="submit"
-                                                onclick="return confirm('¿Estás seguro de que deseas eliminar este producto?')"
-                                                class="inline-flex items-center justify-center px-4 py-2 bg-red-600 hover:bg-red-500 text-white text-xs font-bold rounded-xl shadow-sm hover:shadow-red-500/20 transform hover:-translate-y-0.5 transition-all duration-200 cursor-pointer">
+                                            onclick="return confirm('¿Estás seguro de que deseas eliminar este producto?')"
+                                            class="inline-flex items-center justify-center px-4 py-2 bg-red-600 hover:bg-red-500 text-white text-xs font-bold rounded-xl shadow-sm hover:shadow-red-500/20 transform hover:-translate-y-0.5 transition-all duration-200 cursor-pointer">
                                             <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                             </svg>
