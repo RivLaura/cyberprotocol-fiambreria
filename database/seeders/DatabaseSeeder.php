@@ -37,6 +37,11 @@ class DatabaseSeeder extends Seeder
         $this->call([
             ClienteSeeder::class,
         ]);
+
+        // seed de Consumidor Final (debe ir después de ClienteSeeder)
+        $this->call([
+            ConsumidorFinalSeeder::class,
+        ]);
     }
 }
 
