@@ -32,6 +32,11 @@ class DatabaseSeeder extends Seeder
         $this->call([
             ProductoSeeder::class,
         ]);
+
+        // seed de Clientes
+        $this->call([
+            ClienteSeeder::class,
+        ]);
     }
 }
 
