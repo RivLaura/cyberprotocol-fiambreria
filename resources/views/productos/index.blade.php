@@ -76,33 +76,31 @@
                                 </span>
                             </td>
 
-                            <div class="block md:contents">
-                                <td class="px-5 py-2 md:px-6 md:py-4 block md:table-cell border-t border-gray-50 md:border-t-0 w-1/2 md:w-auto">
-                                    <span class="md:hidden block text-[10px] font-sans font-bold tracking-wider text-amber-900/50 uppercase mb-0.5">Precio</span>
-                                    <span class="text-base md:text-sm font-mono font-bold text-gray-900">${{ number_format($producto->precio, 2) }}</span>
-                                </td>
+                            <td class="px-5 py-2 md:px-6 md:py-4 block md:table-cell border-t border-gray-50 md:border-t-0 w-1/2 md:w-auto">
+                                <span class="md:hidden block text-[10px] font-sans font-bold tracking-wider text-amber-900/50 uppercase mb-0.5">Precio</span>
+                                <span class="text-base md:text-sm font-mono font-bold text-gray-900">${{ number_format($producto->precio, 2) }}</span>
+                            </td>
 
-                                <td class="px-5 py-2 md:px-6 md:py-4 block md:table-cell">
-                                    @if($producto->stock <= $producto->stock_minimo)
-                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 animate-pulse">
-                                            <svg class="w-4 h-4 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
-                                            </svg>
-                                            {{ $producto->stock }} u. (Crítico)
-                                        </span>
-                                        @else
-                                        <span class="text-base font-mono text-gray-900">
-                                            {{ $producto->stock }} u.
-                                        </span>
-                                        @endif
-                                </td>
-                            </div>
+                            <td class="px-5 py-2 md:px-6 md:py-4 block md:table-cell">
+                                @if($producto->stock <= $producto->stock_minimo)
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 animate-pulse">
+                                        <svg class="w-4 h-4 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+                                        </svg>
+                                        {{ $producto->stock }} u. (Crítico)
+                                    </span>
+                                    @else
+                                    <span class="text-base font-mono text-gray-900">
+                                        {{ $producto->stock }} u.
+                                    </span>
+                                    @endif
+                            </td>
 
                             <td class="px-5 py-2.5 pb-4 md:px-6 md:py-4 block md:table-cell">
                                 <span class="md:hidden block text-[10px] font-sans font-bold tracking-wider text-amber-900/50 uppercase mb-1">Fecha de Vencimiento</span>
                                 <span class="inline-flex items-center px-2 py-1 md:py-0.5 rounded-md text-xs font-mono font-bold bg-amber-50/60 md:bg-gray-100 text-amber-900 md:text-gray-700 border border-amber-200/40 md:border-transparent">
                                     <svg class="w-3 h-3 mr-1 text-amber-700/60 md:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                     </svg>
                                     {{ $producto->fecha_vencimiento ? \Carbon\Carbon::parse($producto->fecha_vencimiento)->format('d/m/Y') : 'No aplica' }}
                                 </span>
