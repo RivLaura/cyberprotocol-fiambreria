@@ -76,7 +76,7 @@
 
                         <div>
                             <label for="stock_minimo" class="block text-xs font-serif uppercase tracking-wider text-amber-950 font-bold mb-2">Stock Mínimo</label>
-                            <input type="number" name="stock_minimo" id="stock_minimo" min="0" 
+                            <input type="number" name="stock_minimo" id="stock_minimo"
                                 value="{{ old('stock_minimo', $producto->stock_minimo) }}"
                                 class="w-full rounded-xl border-amber-200 focus:border-amber-500 focus:ring focus:ring-amber-200/50 bg-amber-50/10 text-sm transition-all duration-200 py-3" required>
                             @error('stock_minimo') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror

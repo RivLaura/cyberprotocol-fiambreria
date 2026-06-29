@@ -74,7 +74,7 @@
                         {{-- Campo: Stock Inicial --}}
                         <div>
                             <label for="stock" class="block text-xs font-serif uppercase tracking-wider text-amber-950 font-bold mb-2">Stock Inicial</label>
-                            <input type="number" min="0" name="stock" id="stock" min="0"
+                            <input type="number" min="0" name="stock" id="stock"
                             value="{{ old('stock', 0) }}" required
                                 class="w-full rounded-xl border-amber-200 focus:border-amber-500 focus:ring focus:ring-amber-200/50 bg-amber-50/10 text-sm font-mono transition-all duration-200 py-3">
                             @error('stock') <span class="text-red-500 text-xs mt-1 block font-medium">{{ $message }}</span> @enderror
@@ -83,7 +83,7 @@
                         {{-- Campo: Stock Mínimo --}}
                         <div>
                             <label for="stock_minimo" class="block text-xs font-serif uppercase tracking-wider text-amber-950 font-bold mb-2">Stock Mínimo (Alerta)</label>
-                            <input type="number" min="0" name="stock_minimo" id="stock_minimo" min="0"
+                            <input type="number" min="0" name="stock_minimo" id="stock_minimo"
                             value="{{ old('stock_minimo', 5) }}" required
                                 class="w-full rounded-xl border-amber-200 focus:border-amber-500 focus:ring focus:ring-amber-200/50 bg-amber-50/10 text-sm font-mono transition-all duration-200 py-3">
                             @error('stock_minimo') <span class="text-red-500 text-xs mt-1 block font-medium">{{ $message }}</span> @enderror
