@@ -8,44 +8,39 @@ use Illuminate\Http\Request;
 
 class VentaController extends Controller
 {
-    /**
-     * Mostrar formulario de nueva venta (POS)
-     */
     public function create()
     {
-        $clientes = Cliente::orderBy('nombre', 'asc')->get();
+        $clientes = Cliente::orderBy('nombre')->get();
 
         $consumidorFinal = Cliente::where('consumidor_final', true)->first();
 
-        // Cliente por defecto seleccionado
-        $clienteSeleccionado = $consumidorFinal;
-
-        return view('ventas.create', compact(
-            'clientes',
-            'consumidorFinal',
-            'clienteSeleccionado'
-        ));
+        return view('ventas.create', compact('clientes', 'consumidorFinal'));
     }
 
-    /**
-     * Guardar nueva venta
-     */
     public function store(Request $request)
     {
+        // Validación
+        $request->validate([
+            'cliente_id' => 'nullable|exists:clientes,id',
+            'total' => 'required|numeric|min:0',
+        ]);
+
+        // Obtener cliente seleccionado
         $cliente = Cliente::find($request->cliente_id);
 
-        // fallback seguro a consumidor final
+        // Si no se seleccionó un cliente, usar Consumidor Final
         if (!$cliente) {
             $cliente = Cliente::where('consumidor_final', true)->first();
         }
 
-        $venta = Venta::create([
+        // Registrar la venta
+        Venta::create([
             'cliente_id' => $cliente?->id,
-            'total' => $request->total ?? 0,
+            'total' => $request->total,
         ]);
 
         return redirect()
             ->route('ventas.create')
-            ->with('success', 'Venta creada correctamente');
+            ->with('success', 'Venta procesada correctamente.');
     }
 }
