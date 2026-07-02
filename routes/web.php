@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\ClienteController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -58,6 +59,17 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/productos/{producto}', [ProductoController::class, 'destroy'])
         ->name('productos.destroy');
+    
+    
+    // CLIENTES
+    Route::get('/clientes', [ClienteController::class, 'index'])
+    ->name('clientes.index');
+
+    Route::get('/clientes/create', [ClienteController::class, 'create'])
+        ->name('clientes.create');
+
+    Route::post('/clientes', [ClienteController::class, 'store'])
+        ->name('clientes.store');
 });
 
 require __DIR__.'/auth.php';
