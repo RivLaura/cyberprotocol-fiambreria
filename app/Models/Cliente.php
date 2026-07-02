@@ -17,20 +17,25 @@ class Cliente extends Model
         'apellido',
         'telefono',
         'email',
-        'consumidor_final',
     ];
 
-    protected static function booted(): void
-    {
-        static::deleting(function (Cliente $cliente) {
-            if ($cliente->consumidor_final) {
-                throw new \LogicException('El cliente Consumidor Final no puede ser eliminado.');
-            }
-        });
-    }
-
+    // Relación con la tabla de ventas
     public function ventas(): HasMany
     {
         return $this->hasMany(Venta::class);
+    }
+
+    // Método para obtener o crear el cliente "Consumidor Final"
+    public static function consumidorFinal(): self
+    {
+        return self::firstOrCreate(
+            ['documento' => '00000000'],
+            [
+                'nombre' => 'Consumidor',
+                'apellido' => 'Final',
+                'telefono' => null,
+                'email' => null,
+            ]
+        );
     }
 }
