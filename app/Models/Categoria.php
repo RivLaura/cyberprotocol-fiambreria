@@ -1,28 +1,77 @@
 <?php
 
-namespace App\Models;
+namespace App\Http\Controllers;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Cliente;
+use Illuminate\Http\Request;
 
-class Categoria extends Model
+class ClienteController extends Controller
 {
-    use HasFactory;
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(Request $request)
+    {
+        $buscar = $request->input('buscar');
 
-    protected $table = 'categorias';
+        $clientes = Cliente::query()
+            ->when($buscar, function ($query) use ($buscar) {
+                $query->where('nombre', 'like', "%{$buscar}%")
+                      ->orWhere('apellido', 'like', "%{$buscar}%")
+                      ->orWhere('telefono', 'like', "%{$buscar}%")
+                      ->orWhere('email', 'like', "%{$buscar}%");
+            })
+            ->orderBy('nombre', 'asc')
+            ->get();
 
-    protected $fillable = [
-        'nombre',
-        'descripcion',
-    ];
+        return view('clientes.index', compact('clientes'));
+    }
 
     /**
-     * Relación futura con productos. 
-     * Una categoría puede tener muchos productos.
+     * Show the form for creating a new resource.
      */
-    public function productos(): HasMany
+    public function create()
     {
-        return $this->hasMany(Producto::class);
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
     }
 }
