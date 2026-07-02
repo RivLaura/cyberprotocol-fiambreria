@@ -1,0 +1,94 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Models\Producto;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends Factory<Producto>
+ */
+class ProductoFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition(): array
+    {
+        $categoria = \App\Models\Categoria::inRandomOrder()->first();
+
+        $productos = [
+
+            'Fiambres' => [
+                'Jamón Cocido',
+                'Jamón Crudo',
+                'Paleta Cocida',
+                'Mortadela',
+                'Bondiola',
+                'Pechuga de Pavo',
+                'Lomo Cocido',
+                'Lomo Ahumado',
+            ],
+
+            'Quesos' => [
+                'Queso Cremoso',
+                'Queso Tybo',
+                'Queso Provolone',
+                'Queso Pategrás',
+                'Queso Azul',
+                'Muzzarella',
+                'Ricota',
+                'Queso Sardo',
+            ],
+
+            'Embutidos' => [
+                'Salame',
+                'Salamín',
+                'Longaniza',
+                'Chorizo Colorado',
+                'Cantimpalo',
+                'Fuet',
+            ],
+
+            'Bebidas' => [
+                'Agua Mineral',
+                'Gaseosa Cola',
+                'Gaseosa Lima Limón',
+                'Agua Saborizada',
+                'Jugo de Naranja',
+                'Cerveza Rubia',
+            ],
+
+        ];
+
+        return [
+
+            'nombre' => fake()->randomElement(
+                $productos[$categoria->nombre]
+            ),
+
+            'descripcion' => fake()->randomElement([
+                'Producto fresco.',
+                'Excelente calidad.',
+                'Ideal para picadas.',
+                'Conservar refrigerado.',
+                'Producto seleccionado.',
+            ]),
+
+            'precio' => fake()->randomFloat(2, 1000, 15000),
+
+            'stock' => fake()->numberBetween(10, 80),
+
+            'stock_minimo' => 5,
+
+            'fecha_elaboracion' => fake()->dateTimeBetween('-20 days', 'now'),
+
+            'fecha_vencimiento' => fake()->dateTimeBetween('+15 days', '+8 months'),
+
+            'categoria_id' => $categoria->id,
+
+        ];
+    }
+}
