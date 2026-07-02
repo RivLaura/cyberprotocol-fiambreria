@@ -1,77 +1,28 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Models;
 
-use App\Models\Cliente;
-use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class ClienteController extends Controller
+class Categoria extends Model
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(Request $request)
-    {
-        $buscar = $request->input('buscar');
+    use HasFactory;
+    
+    protected $table = 'categorias';
 
-        $clientes = Cliente::query()
-            ->when($buscar, function ($query) use ($buscar) {
-                $query->where('nombre', 'like', "%{$buscar}%")
-                      ->orWhere('apellido', 'like', "%{$buscar}%")
-                      ->orWhere('telefono', 'like', "%{$buscar}%")
-                      ->orWhere('email', 'like', "%{$buscar}%");
-            })
-            ->orderBy('nombre', 'asc')
-            ->get();
-
-        return view('clientes.index', compact('clientes'));
-    }
+    protected $fillable = [
+        'nombre',
+        'descripcion',
+    ];
 
     /**
-     * Show the form for creating a new resource.
+     * Relación futura con productos. 
+     * Una categoría puede tener muchos productos.
      */
-    public function create()
+    public function productos(): HasMany
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return $this->hasMany(Producto::class);
     }
 }
