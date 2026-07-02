@@ -9,9 +9,11 @@ class ConsumidorFinalSeeder extends Seeder
 {
     public function run(): void
     {
+        // Crear el cliente "Consumidor Final" si no existe
         Cliente::withoutEvents(function () {
-            Cliente::updateOrCreate(
-                ['consumidor_final' => true],
+            // Usar firstOrCreate para evitar duplicados
+            Cliente::firstOrCreate(
+                ['documento' => '00000000'],
                 [
                     'nombre' => 'Consumidor',
                     'apellido' => 'Final',

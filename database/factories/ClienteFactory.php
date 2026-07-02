@@ -5,9 +5,6 @@ namespace Database\Factories;
 use App\Models\Cliente;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends Factory<Cliente>
- */
 class ClienteFactory extends Factory
 {
     public function definition(): array
@@ -15,8 +12,8 @@ class ClienteFactory extends Factory
         return [
             'nombre' => fake()->firstName(),
             'apellido' => fake()->lastName(),
-            'telefono' => fake()->optional()->phoneNumber(),
-            'email' => fake()->optional()->safeEmail(),
+            'telefono' => fake()->numerify('3704######'),
+            'email' => fake()->unique()->safeEmail(),
         ];
     }
 }
