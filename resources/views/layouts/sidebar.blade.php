@@ -42,7 +42,7 @@
                 </li>
 
                 <li>
-                    <a href="#"
+                    <a href="{{ route('ventas.index') }}"
                         class="block rounded-lg px-4 py-3 text-white hover:bg-amber-700 transition">
                         🧾 Ventas
                     </a>

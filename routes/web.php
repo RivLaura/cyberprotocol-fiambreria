@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\VentaController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,7 +20,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-   
+
     // CATEGORÍAS
     Route::get('/categorias', [CategoriaController::class, 'index'])
         ->name('categorias.index');
@@ -59,17 +60,27 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/productos/{producto}', [ProductoController::class, 'destroy'])
         ->name('productos.destroy');
-    
-    
+
+
     // CLIENTES
     Route::get('/clientes', [ClienteController::class, 'index'])
-    ->name('clientes.index');
+        ->name('clientes.index');
 
     Route::get('/clientes/create', [ClienteController::class, 'create'])
         ->name('clientes.create');
 
     Route::post('/clientes', [ClienteController::class, 'store'])
         ->name('clientes.store');
+
+    // VENTAS
+    Route::get('/ventas', [VentaController::class, 'index'])
+        ->name('ventas.index');
+
+    Route::get('/ventas/create', [VentaController::class, 'create'])
+        ->name('ventas.create');
+
+    Route::post('/ventas', [VentaController::class, 'store'])
+        ->name('ventas.store');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
