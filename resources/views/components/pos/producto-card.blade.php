@@ -7,32 +7,79 @@
 </head>
 
 <body>
-    <div class="rounded-2xl bg-white shadow hover:shadow-lg transition p-5">
+    @props(['producto'])
 
-        <div class="text-5xl text-center mb-4">
+    <div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition duration-300 overflow-hidden border border-stone-200">
 
-            🧀
+        <!-- Imagen temporal -->
+        <div class="h-36 bg-gradient-to-br from-amber-100 to-amber-50 flex items-center justify-center">
+
+            <span class="text-6xl">
+
+                🧀
+
+            </span>
 
         </div>
 
-        <h3 class="font-bold text-lg text-stone-800">
+        <div class="p-5">
 
-            Jamón Cocido
+            <h3 class="text-lg font-bold text-stone-800">
 
-        </h3>
+                {{ $producto->nombre }}
 
-        <p class="text-stone-500 mt-1">
+            </h3>
 
-            $12.500 / kg
+            <p class="text-sm text-stone-500 mt-1">
 
-        </p>
+                {{ $producto->categoria->nombre }}
 
-        <button
-            class="mt-5 w-full rounded-xl bg-amber-700 py-2 text-white hover:bg-amber-800">
+            </p>
 
-            Agregar
+            <div class="mt-4 space-y-2">
 
-        </button>
+                <div class="flex justify-between">
+
+                    <span class="text-stone-500">
+
+                        Precio
+
+                    </span>
+
+                    <span class="font-semibold text-amber-700">
+
+                        ${{ number_format($producto->precio,0,',','.') }}
+
+                    </span>
+
+                </div>
+
+                <div class="flex justify-between">
+
+                    <span class="text-stone-500">
+
+                        Stock
+
+                    </span>
+
+                    <span class="font-semibold">
+
+                        {{ $producto->stock }}
+
+                    </span>
+
+                </div>
+
+            </div>
+
+            <button
+                class="mt-6 w-full rounded-xl bg-amber-700 hover:bg-amber-800 text-white py-2 transition">
+
+                Agregar
+
+            </button>
+
+        </div>
 
     </div>
 </body>

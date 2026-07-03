@@ -19,6 +19,13 @@ class Cliente extends Model
         'email',
     ];
 
+    protected $appends = ['nombre_completo'];
+
+    public function getNombreCompletoAttribute(): string
+    {
+        return trim($this->nombre . ' ' . $this->apellido);
+    }
+
     // Relación con la tabla de ventas
     public function ventas(): HasMany
     {
