@@ -23,11 +23,17 @@ class DashboardController extends Controller
 
         $clienteConsumidorFinal = Cliente::where('consumidor_final', true)->first();
 
+        $carrito = session('carrito', []);
+
+        $total = collect($carrito)->sum('subtotal');
+
         return view('dashboard', compact(
             'productos',
             'categorias',
             'clientes',
-            'clienteConsumidorFinal'
+            'clienteConsumidorFinal',
+            'carrito',
+            'total'
         ));
     }
 }

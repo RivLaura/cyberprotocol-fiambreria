@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\VentaController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CarritoController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -82,6 +83,16 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/ventas', [VentaController::class, 'store'])
         ->name('ventas.store');
+
+    // CARRITO
+    Route::post('/carrito/agregar', [CarritoController::class, 'add'])
+        ->name('carrito.add');
+
+    Route::delete('/carrito/{producto}', [CarritoController::class, 'remove'])
+        ->name('carrito.remove');
+
+    Route::delete('/carrito', [CarritoController::class, 'clear'])
+        ->name('carrito.clear');
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

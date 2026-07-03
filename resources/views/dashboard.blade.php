@@ -1,6 +1,44 @@
 <x-app-layout>
 
-    <div class="p-6">
+    <div
+        class="p-6"
+        x-data="{
+            mostrarModal: false,
+
+            mensaje: 'Hola Alpine',
+
+            producto: {
+                id: '',
+                nombre: '',
+                precio: '',
+                categoria: ''
+            },
+
+            cantidad: '',
+
+            subtotal: 0,
+
+            calcularSubtotal() {
+
+                if(this.cantidad == '' || this.cantidad <= 0){
+
+                    this.subtotal = 0;
+                    return;
+
+                }
+
+                if(this.producto.categoria == 'Bebidas'){
+
+                    this.subtotal = this.producto.precio * this.cantidad;
+
+                }else{
+
+                    this.subtotal = (this.producto.precio * this.cantidad) / 1000;
+
+                }
+
+            }
+        }">
 
         <div class="grid grid-cols-12 gap-6">
 
@@ -138,10 +176,42 @@
 
                     </div>
 
-                    <div
-                        class="h-80 border rounded-lg flex items-center justify-center text-stone-400">
+                    <div class="h-80 border rounded-lg overflow-y-auto p-4">
 
-                        Aquí aparecerán los productos seleccionados.
+                        @forelse($carrito as $item)
+
+                        <div class="border rounded-lg p-3 mb-3">
+
+                            <div class="flex justify-between">
+
+                                <span class="font-semibold">
+                                    {{ $item['nombre'] }}
+                                </span>
+
+                                <span class="font-semibold text-amber-700">
+                                    $ {{ number_format($item['subtotal'], 2, ',', '.') }}
+                                </span>
+
+                            </div>
+
+                            <div class="text-sm text-stone-500 mt-1">
+
+                                Cantidad:
+                                {{ $item['cantidad'] }}
+
+                            </div>
+
+                        </div>
+
+                        @empty
+
+                        <div class="h-full flex items-center justify-center text-stone-400">
+
+                            No hay productos agregados.
+
+                        </div>
+
+                        @endforelse
 
                     </div>
 
@@ -158,7 +228,7 @@
 
                             <span>
 
-                                $0,00
+                                $ {{ number_format($total, 2, ',', '.') }}
 
                             </span>
 
@@ -179,6 +249,10 @@
 
         </div>
 
+        <!-- PEGAR EL MODAL COMPLETO ACÁ -->
+       <x-pos.modal-cantidad />
+       
     </div>
+
 
 </x-app-layout>

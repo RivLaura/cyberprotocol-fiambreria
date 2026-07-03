@@ -1,12 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-
-<body>
     <div class="mb-6">
 
         <label
@@ -25,6 +16,3 @@
                focus:border-amber-700 focus:ring focus:ring-amber-200">
 
     </div>
-</body>
-
-</html>

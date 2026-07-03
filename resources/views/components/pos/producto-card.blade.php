@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-
-<body>
     @props(['producto'])
 
     @php
@@ -114,15 +106,22 @@
                 @endif
 
                 <button
-                    class="mt-6 w-full rounded-xl bg-amber-700 hover:bg-amber-800 active:scale-95 text-white font-semibold py-3 transition-all">
+                    type="button"
+                    @click="
+                    mostrarModal = true;
+
+                    producto = {
+                        id: {{ $producto->id }},
+                        nombre: '{{ $producto->nombre }}',
+                        precio: {{ $producto->precio }},
+                        categoria: '{{ $producto->categoria->nombre }}'
+                    };
+                "
+                    class="mt-6 w-full rounded-xl bg-amber-700 hover:bg-amber-800 text-white py-3">
 
                     🛒 Agregar
 
                 </button>
-
             </div>
 
         </div>
-</body>
-
-</html>
