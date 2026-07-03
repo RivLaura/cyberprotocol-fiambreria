@@ -182,22 +182,48 @@
 
                         <div class="border rounded-lg p-3 mb-3">
 
-                            <div class="flex justify-between">
+                            <div class="flex justify-between items-start">
 
-                                <span class="font-semibold">
-                                    {{ $item['nombre'] }}
-                                </span>
+                                <div>
 
-                                <span class="font-semibold text-amber-700">
-                                    $ {{ number_format($item['subtotal'], 2, ',', '.') }}
-                                </span>
+                                    <div class="font-semibold">
+                                        {{ $item['nombre'] }}
+                                    </div>
 
-                            </div>
+                                    <div class="text-sm text-stone-500 mt-1">
 
-                            <div class="text-sm text-stone-500 mt-1">
+                                        Cantidad:
+                                        {{ $item['cantidad'] }}
 
-                                Cantidad:
-                                {{ $item['cantidad'] }}
+                                    </div>
+
+                                </div>
+
+                                <div class="text-right">
+
+                                    <div class="font-semibold text-amber-700 mb-2">
+                                        $ {{ number_format($item['subtotal'], 2, ',', '.') }}
+                                    </div>
+
+                                    <form
+                                        action="{{ route('carrito.destroy', $item['id']) }}"
+                                        method="POST">
+
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <button
+                                            type="submit"
+                                            class="text-red-600 hover:text-red-800 text-xl"
+                                            title="Eliminar producto">
+
+                                            🗑️
+
+                                        </button>
+
+                                    </form>
+
+                                </div>
 
                             </div>
 
@@ -214,6 +240,7 @@
                         @endforelse
 
                     </div>
+
 
                     <div class="mt-6 border-t pt-5">
 
@@ -250,8 +277,8 @@
         </div>
 
         <!-- PEGAR EL MODAL COMPLETO ACÁ -->
-       <x-pos.modal-cantidad />
-       
+        <x-pos.modal-cantidad />
+
     </div>
 
 

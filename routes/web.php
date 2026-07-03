@@ -93,6 +93,9 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/carrito', [CarritoController::class, 'clear'])
         ->name('carrito.clear');
+    
+    Route::delete('/carrito/{producto}', [CarritoController::class, 'destroy'])
+    ->name('carrito.destroy');
 });
 
 require __DIR__.'/auth.php';

@@ -13,21 +13,30 @@ class CarritoController extends Controller
 
         $carrito = session()->get('carrito', []);
 
-        // Si el producto ya existe, por ahora no hacemos nada.
-        if (!isset($carrito[$producto->id])) {
+        $cantidad = (float) $request->cantidad;
+        $subtotal = (float) $request->subtotal;
 
-            $carrito[$producto->id] = [
-                'id' => $producto->id,
-                'nombre' => $producto->nombre,
-                'precio' => $producto->precio,
-                'cantidad' => 1,
-                'subtotal' => $producto->precio,
-            ];
-        }
+        $carrito[$producto->id] = [
+            'id' => $producto->id,
+            'nombre' => $producto->nombre,
+            'precio' => $producto->precio,
+            'cantidad' => $cantidad,
+            'subtotal' => $subtotal,
+        ];
 
         session()->put('carrito', $carrito);
 
-        return redirect()->back();
+        return redirect()->route('dashboard');
     }
 
+    public function destroy($productoId)
+    {
+        $carrito = session()->get('carrito', []);
+
+        unset($carrito[$productoId]);
+
+        session()->put('carrito', $carrito);
+
+        return redirect()->route('dashboard');
+    }
 }

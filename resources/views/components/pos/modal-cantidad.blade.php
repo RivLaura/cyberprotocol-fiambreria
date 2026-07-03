@@ -24,7 +24,7 @@
                 <p
                     class="text-xl font-semibold"
                     x-text="producto.nombre">
-                </p>    
+                </p>
 
 
             </div>
@@ -97,25 +97,50 @@
 
         </div>
 
-        <div class="flex justify-end gap-3 mt-8">
+        <form
+            method="POST"
+            action="{{ route('carrito.add') }}"
+            class="mt-8">
 
-            <button
-                @click="mostrarModal = false"
-                class="px-5 py-2 rounded-lg border">
+            @csrf
 
-                Cancelar
+            <input
+                type="hidden"
+                name="producto_id"
+                :value="producto.id">
 
-            </button>
+            <input
+                type="hidden"
+                name="cantidad"
+                :value="cantidad">
 
-            <button
-                class="px-5 py-2 rounded-lg bg-amber-700 hover:bg-amber-800 text-white">
+            <input
+                type="hidden"
+                name="subtotal"
+                :value="subtotal">
 
-                Agregar
+            <div class="flex justify-end gap-3">
 
-            </button>
+                <button
+                    type="button"
+                    @click="mostrarModal = false"
+                    class="px-5 py-2 rounded-lg border">
 
-        </div>
+                    Cancelar
 
+                </button>
+
+                <button
+                    type="submit"
+                    class="px-5 py-2 rounded-lg bg-amber-700 hover:bg-amber-800 text-white">
+
+                    Agregar
+
+                </button>
+
+            </div>
+
+        </form>
     </div>
 
 </div>
