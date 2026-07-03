@@ -8,6 +8,7 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\VentaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CarritoController;
+use App\Http\Controllers\VentaProcesoController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -96,6 +97,11 @@ Route::middleware('auth')->group(function () {
     
     Route::delete('/carrito/{producto}', [CarritoController::class, 'destroy'])
     ->name('carrito.destroy');
+
+    // PROCESAR VENTA
+    Route::post('/ventas/procesar', [VentaProcesoController::class, 'store'])
+    ->name('ventas.procesar');
+
 });
 
 require __DIR__.'/auth.php';

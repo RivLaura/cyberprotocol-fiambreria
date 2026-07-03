@@ -70,7 +70,11 @@
 
                                     <td class="px-6 py-4">
 
-                                        {{ $venta->cliente?->nombre ?? 'Consumidor Final' }}
+                                        @if($venta->cliente)
+                                            {{ $venta->cliente->nombre }} {{ $venta->cliente->apellido }}
+                                        @else
+                                            Consumidor Final
+                                        @endif
 
                                     </td>
 

@@ -5,33 +5,47 @@
         x-data="{
             mostrarModal: false,
 
-            mensaje: 'Hola Alpine',
-
             producto: {
                 id: '',
                 nombre: '',
                 precio: '',
-                categoria: ''
+                categoria: '',
+                stock: ''
             },
+
+            clienteSeleccionado: '{{ $clienteConsumidorFinal?->id }}',
 
             cantidad: '',
 
             subtotal: 0,
 
+            stockValido: true,
+
             calcularSubtotal() {
 
-                if(this.cantidad == '' || this.cantidad <= 0){
+                if (this.cantidad == '' || this.cantidad <= 0) {
 
+                    this.subtotal = 0;
+                    this.stockValido = true;
+                    return;
+
+                }
+
+                if (this.cantidad > this.producto.stock) {
+
+                    this.stockValido = false;
                     this.subtotal = 0;
                     return;
 
                 }
 
-                if(this.producto.categoria == 'Bebidas'){
+                this.stockValido = true;
+
+                if (this.producto.categoria == 'Bebidas') {
 
                     this.subtotal = this.producto.precio * this.cantidad;
 
-                }else{
+                } else {
 
                     this.subtotal = (this.producto.precio * this.cantidad) / 1000;
 
@@ -50,6 +64,16 @@
                 <h1 class="text-3xl font-bold text-stone-800">
                     Punto de Venta
                 </h1>
+
+                @if(session('error'))
+
+                <div class="mt-4 mb-4 rounded-lg bg-red-100 border border-red-300 text-red-700 px-4 py-3">
+
+                    {{ session('error') }}
+
+                </div>
+
+                @endif
 
                 <p class="text-stone-500 mt-1 mb-6">
                     Seleccione los productos para comenzar una nueva venta.
@@ -150,6 +174,7 @@
                         </label>
 
                         <select
+                            x-model="clienteSeleccionado"
                             class="w-full rounded-lg border border-stone-300 px-3 py-2">
 
                             @if($clienteConsumidorFinal)
@@ -261,13 +286,26 @@
 
                         </div>
 
-                        <button
-                            class="mt-6 w-full bg-amber-700 hover:bg-amber-800 text-white py-3 rounded-lg">
+                        <form
+                            action="{{ route('ventas.procesar') }}"
+                            method="POST">
 
-                            Procesar Venta
+                            @csrf
 
-                        </button>
+                            <input
+                                type="hidden"
+                                name="cliente_id"
+                                :value="clienteSeleccionado">
 
+                            <button
+                                type="submit"
+                                class="mt-6 w-full bg-amber-700 hover:bg-amber-800 text-white py-3 rounded-lg w-full">
+
+                                Procesar Venta
+
+                            </button>
+
+                        </form>
                     </div>
 
                 </div>

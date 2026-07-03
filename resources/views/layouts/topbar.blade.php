@@ -46,7 +46,7 @@
                     </p>
 
                     <p class="text-xs text-amber-100">
-                        Vendedor
+                        Vendedor/a
                     </p>
 
                 </div>

@@ -73,6 +73,14 @@
                     "
                     class="w-full rounded-lg border border-stone-300 px-3 py-2">
 
+                <p
+                    x-show="!stockValido"
+                    class="mt-2 text-sm text-red-600 font-semibold">
+
+                    ❌ Stock insuficiente.
+
+                </p>
+
                 <div class="mt-4">
 
                     <label class="text-sm text-stone-500">
@@ -132,7 +140,11 @@
 
                 <button
                     type="submit"
-                    class="px-5 py-2 rounded-lg bg-amber-700 hover:bg-amber-800 text-white">
+                    :disabled="!stockValido"
+                    class="px-5 py-2 rounded-lg text-white"
+                    :class="stockValido
+                        ? 'bg-amber-700 hover:bg-amber-800'
+                        : 'bg-gray-400 cursor-not-allowed'">
 
                     Agregar
 
