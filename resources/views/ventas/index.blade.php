@@ -43,6 +43,7 @@
                             <th scope="col" class="px-6 py-4 text-left text-xs font-serif uppercase tracking-wider text-amber-950 font-bold">Productos</th>
                             <th scope="col" class="px-6 py-4 text-left text-xs font-serif uppercase tracking-wider text-amber-950 font-bold">Total</th>
                             <th scope="col" class="px-6 py-4 text-left text-xs font-serif uppercase tracking-wider text-amber-950 font-bold">Fecha</th>
+                            <th scope="col" class="px-6 py-4 text-right text-xs font-serif uppercase tracking-wider text-amber-950 font-bold">Acción</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100 bg-white block md:table-row-group">
@@ -91,6 +92,16 @@
                                     </svg>
                                     {{ $venta->created_at->format('d/m/Y H:i') }}
                                 </span>
+                            </td>
+
+                            <td class="px-5 py-3 md:px-6 md:py-4 whitespace-nowrap text-xs font-medium md:align-middle bg-gray-50/50 md:bg-transparent flex md:table-cell justify-end border-t border-gray-100 md:border-t-0">
+                                <a href="{{ route('ventas.show', $venta->id) }}" class="inline-flex items-center justify-center px-4 py-2 bg-white hover:bg-amber-50 text-amber-950 text-xs font-bold rounded-xl border border-amber-200 shadow-sm transform hover:-translate-y-0.5 transition-all duration-200 cursor-pointer">
+                                    <svg class="w-4 h-4 mr-1.5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                    </svg>
+                                    Ver
+                                </a>
                             </td>
 
                         </tr>
