@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\VentaController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -70,6 +71,10 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/clientes', [ClienteController::class, 'store'])
         ->name('clientes.store');
+
+    // VENTAS
+    Route::get('/ventas', [VentaController::class, 'index'])
+        ->name('ventas.index');
 });
 
 require __DIR__.'/auth.php';

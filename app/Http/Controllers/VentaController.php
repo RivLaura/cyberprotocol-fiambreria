@@ -9,6 +9,18 @@ use Illuminate\Http\Request;
 class VentaController extends Controller
 {
     /**
+     * Mostrar listado de ventas
+     */
+    public function index()
+    {
+        $ventas = Venta::with('cliente', 'detalle_ventas')
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        return view('ventas.index', compact('ventas'));
+    }
+
+    /**
      * Mostrar formulario de nueva venta (POS)
      */
     public function create()
