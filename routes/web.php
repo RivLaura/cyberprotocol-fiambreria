@@ -75,6 +75,15 @@ Route::middleware('auth')->group(function () {
     // VENTAS
     Route::get('/ventas', [VentaController::class, 'index'])
         ->name('ventas.index');
+
+    Route::get('/ventas/crear', [VentaController::class, 'create'])
+        ->name('ventas.create');
+
+    Route::post('/ventas', [VentaController::class, 'store'])
+        ->name('ventas.store');
+
+    Route::get('/ventas/{venta}', [VentaController::class, 'show'])
+        ->name('ventas.show');
 });
 
 require __DIR__.'/auth.php';
