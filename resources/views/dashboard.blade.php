@@ -18,12 +18,18 @@
                 </p>
 
                 <!-- Buscador -->
-                <div class="bg-white rounded-xl shadow p-5 mb-5">
+                <div class="relative">
+
+                    <span class="absolute left-4 top-3 text-stone-400">
+
+                        🔍
+
+                    </span>
 
                     <input
                         type="text"
-                        placeholder="Buscar producto..."
-                        class="w-full rounded-lg border border-stone-300 px-4 py-3 focus:ring-amber-500 focus:border-amber-600">
+                        placeholder="Buscar productos..."
+                        class="w-full rounded-xl border border-stone-300 pl-12 pr-4 py-3 focus:ring-amber-600 focus:border-amber-600">
 
                 </div>
 
@@ -31,31 +37,46 @@
 
                 <div class="flex gap-3 mb-6 flex-wrap">
 
-                    <button class="bg-amber-700 text-white px-5 py-2 rounded-full">
+                    <button
+                        class="rounded-full bg-amber-700 text-white px-5 py-2 shadow hover:bg-amber-800">
+
                         Todos
+
                     </button>
 
-                    <button class="bg-white border px-5 py-2 rounded-full">
+                    <button
+                        class="rounded-full border border-stone-300 bg-white px-5 py-2 hover:bg-stone-100 transition">
+
                         Fiambres
+
                     </button>
 
-                    <button class="bg-white border px-5 py-2 rounded-full">
+                    <button
+                        class="rounded-full border border-stone-300 bg-white px-5 py-2 hover:bg-stone-100 transition">
+
                         Quesos
+
                     </button>
 
-                    <button class="bg-white border px-5 py-2 rounded-full">
+                    <button
+                        class="rounded-full border border-stone-300 bg-white px-5 py-2 hover:bg-stone-100 transition">
+
                         Embutidos
+
                     </button>
 
-                    <button class="bg-white border px-5 py-2 rounded-full">
+                    <button
+                        class="rounded-full border border-stone-300 bg-white px-5 py-2 hover:bg-stone-100 transition">
+
                         Bebidas
+
                     </button>
 
                 </div>
 
                 <!-- Acá irán las tarjetas -->
 
-                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
 
                     @foreach($productos as $producto)
 

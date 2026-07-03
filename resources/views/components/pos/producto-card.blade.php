@@ -9,79 +9,120 @@
 <body>
     @props(['producto'])
 
-    <div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition duration-300 overflow-hidden border border-stone-200">
+    @php
 
-        <!-- Imagen temporal -->
-        <div class="h-36 bg-gradient-to-br from-amber-100 to-amber-50 flex items-center justify-center">
+    $iconos = [
+    'Fiambres' => '🥓',
+    'Quesos' => '🧀',
+    'Embutidos' => '🌭',
+    'Bebidas' => '🥤',
+    ];
 
-            <span class="text-6xl">
+    $icono = $iconos[$producto->categoria->nombre] ?? '📦';
 
-                🧀
+    $stockBajo = $producto->stock <= $producto->stock_minimo;
 
-            </span>
+        $unidad = match ($producto->categoria->nombre) {
+        'Bebidas' => '/ unidad',
+        default => '/ kg',
+        };
 
-        </div>
+        @endphp
 
-        <div class="p-5">
+        <div
+            class="bg-white rounded-2xl border border-stone-200 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden">
 
-            <h3 class="text-lg font-bold text-stone-800">
+            <!-- Encabezado -->
+            <div
+                class="h-36 bg-gradient-to-br from-amber-100 to-amber-50 flex items-center justify-center">
 
-                {{ $producto->nombre }}
+                <span class="text-6xl">
 
-            </h3>
+                    {{ $icono }}
 
-            <p class="text-sm text-stone-500 mt-1">
-
-                {{ $producto->categoria->nombre }}
-
-            </p>
-
-            <div class="mt-4 space-y-2">
-
-                <div class="flex justify-between">
-
-                    <span class="text-stone-500">
-
-                        Precio
-
-                    </span>
-
-                    <span class="font-semibold text-amber-700">
-
-                        ${{ number_format($producto->precio,0,',','.') }}
-
-                    </span>
-
-                </div>
-
-                <div class="flex justify-between">
-
-                    <span class="text-stone-500">
-
-                        Stock
-
-                    </span>
-
-                    <span class="font-semibold">
-
-                        {{ $producto->stock }}
-
-                    </span>
-
-                </div>
+                </span>
 
             </div>
 
-            <button
-                class="mt-6 w-full rounded-xl bg-amber-700 hover:bg-amber-800 text-white py-2 transition">
+            <!-- Contenido -->
 
-                Agregar
+            <div class="p-5">
 
-            </button>
+                <h3 class="text-lg font-bold text-stone-800">
+
+                    {{ $producto->nombre }}
+
+                </h3>
+
+                <p class="text-sm text-stone-500">
+
+                    {{ $producto->categoria->nombre }}
+
+                </p>
+
+                <div class="mt-5 space-y-3">
+
+                    <div class="flex justify-between">
+
+                        <span class="text-stone-500">
+                            Precio
+                        </span>
+
+                        <span class="font-bold text-amber-700">
+
+                            $ {{ number_format($producto->precio,0,',','.') }}
+                            {{ $unidad }}
+
+                        </span>
+
+                    </div>
+
+                    <div class="flex justify-between">
+
+                        <span class="text-stone-500">
+                            Stock
+                        </span>
+
+                        <span class="font-semibold">
+
+                            {{ $producto->stock }}
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+                @if($stockBajo)
+
+                <div
+                    class="mt-5 bg-red-50 text-red-700 text-sm rounded-lg px-3 py-2 flex items-center gap-2">
+
+                    🔴 Stock Bajo
+
+                </div>
+
+                @else
+
+                <div
+                    class="mt-5 bg-green-50 text-green-700 text-sm rounded-lg px-3 py-2 flex items-center gap-2">
+
+                    🟢 Disponible
+
+                </div>
+
+                @endif
+
+                <button
+                    class="mt-6 w-full rounded-xl bg-amber-700 hover:bg-amber-800 active:scale-95 text-white font-semibold py-3 transition-all">
+
+                    🛒 Agregar
+
+                </button>
+
+            </div>
 
         </div>
-
-    </div>
 </body>
 
 </html>
