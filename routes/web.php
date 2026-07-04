@@ -53,10 +53,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/productos', [ProductoController::class, 'store'])
         ->name('productos.store');
 
-    Route::get('/productos/{id}/editar', [ProductoController::class, 'edit'])
+    Route::get('/productos/{producto}/editar', [ProductoController::class, 'edit'])
         ->name('productos.edit');
 
-    Route::put('/productos/{id}', [ProductoController::class, 'update'])
+    Route::put('/productos/{producto}', [ProductoController::class, 'update'])
         ->name('productos.update');
 
     Route::delete('/productos/{producto}', [ProductoController::class, 'destroy'])
@@ -86,6 +86,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/ventas', [VentaController::class, 'index'])
         ->name('ventas.index');
 
+    Route::get('/ventas/export/excel', [VentaController::class, 'exportExcel'])
+        ->name('ventas.export.excel');
+
     Route::get('/ventas/{venta}', [VentaController::class, 'show'])
         ->name('ventas.show');
 
@@ -98,9 +101,6 @@ Route::middleware('auth')->group(function () {
     // CARRITO
     Route::post('/carrito/agregar', [CarritoController::class, 'add'])
         ->name('carrito.add');
-
-    Route::delete('/carrito/{producto}', [CarritoController::class, 'remove'])
-        ->name('carrito.remove');
 
     Route::delete('/carrito', [CarritoController::class, 'clear'])
         ->name('carrito.clear');

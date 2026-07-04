@@ -1,71 +1,77 @@
-<x-guest-layout>
-    <!-- Encabezado del sistema -->
-      <div class="min-h-screen flex flex-col justify-center items-center bg-amber-50/40 p-6 md:p-12 lg:p-16">
-        <div class="w-full max-w-md lg:max-w-5xl bg-white rounded-3xl border border-amber-100 shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-1 transition-all duration-300">
-        <div class="bg-gradient-to-br from-amber-800 to-amber-950 p-8 md:p-10 lg:p-12 flex flex-col justify-center relative">
-            <div class="relative z-10 text-center lg:text-left">
-        <h2 class= "font-serif text-2xl md:text-2xl lg:text-2xl font-bold text-amber-100 leading-tight">
-            Sistema de Gestión de Fiambrería
-        </h2>
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
-        <p class="mt-4 md:mt-5 text-amber-200/80 text-xs md:text-sm lg:text-base font-sans italic max-w-xl mx-auto lg:mx-0">
-            Ingrese sus credenciales para acceder al sistema.
-        
-        </p> 
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- Session Status -->
-    <!-- <div class="p-8 md:p-10 lg:p-12 flex flex-col justify-center bg-white"> -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+    <title>{{ config('app.name', 'CyberProtocol') }} - Fiambrería</title>
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
-<!-- </div> -->
-        <!-- Correo Electrónico -->
-        <div>
-            <x-input-label for="email" :value="__('Correo electrónico')" class="block text-xs font-serif uppercase tracking-wider text-amber-950 font-bold mb-2" />
-            <x-text-input 
-                id="email" 
-                 class="w-full px-4 py-3 bg-amber-50/10 border border-gray-200 focus:border-amber-500 focus:ring-amber-500/50 rounded-xl text-sm text-gray-900 shadow-sm transition-all duration-150"
-                type="email" name="email" 
-                :value="old('email')" 
-                required 
-                autofocus 
-                autocomplete="username" />
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
 
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+
+<body class="min-h-screen flex flex-col justify-center items-center bg-stone-100 px-4 py-8 font-sans text-gray-900 antialiased">
+    <div class="w-full max-w-sm sm:max-w-md bg-white rounded-2xl border border-amber-100 shadow-lg overflow-hidden">
+        <div class="bg-gradient-to-r from-amber-800 to-amber-950 px-6 py-5 text-center">
+            <h2 class="font-serif text-xl font-bold text-amber-50 tracking-wide">
+                CyberProtocol Fiambrería
+            </h2>
+            <p class="text-amber-200/50 text-xs mt-1">
+                {{ __('Ingrese sus credenciales') }}
+            </p>
         </div>
+        <div class="px-7 py-6">
+            <x-auth-session-status class="mb-4" :status="session('status')" />
 
-        <!-- Contraseña -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Contraseña')" class="block text-xs font-serif uppercase tracking-wider text-amber-950 font-bold mb-2" />
-            <x-text-input id="password" 
-                            class="w-full px-4 py-3 bg-amber-50/10 border border-gray-200 focus:border-amber-500 focus:ring-amber-500/50 rounded-xl text-sm text-gray-900 shadow-sm transition-all duration-150"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
+            <form method="POST" action="{{ route('login') }}" class="space-y-4">
+                @csrf
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Recordame -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class= "md:hidden font-sans font-bold text-gray-400 mr-2" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Recordarme') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="inline-flex items-center px-5 py-2.5 bg-amber-500 hover:bg-amber-400 text-amber-950 text-sm font-bold rounded-lg shadow-md hover:shadow-amber-500/20 transform hover:-translate-y-0.5 transition-all duration-200"
-                 href="{{ route('password.request') }}">
-                    {{ __('¿Olvido su contraseña?') }}
+                <a href="{{ url('/') }}"
+                    class="mr-4 text-sm text-amber-700 hover:text-amber-900 font-semibold">
+                    ← Volver al inicio
                 </a>
-            @endif
 
-            <x-primary-button class="ms-3">
-                {{ __('Iniciar Sesión') }}
-            </x-primary-button>
+                <div>
+                    <x-input-label for="email" :value="__('Correo Electrónico')" class="block text-xs font-serif uppercase tracking-wider text-amber-950 font-bold mb-1" />
+                    <x-text-input id="email" class="block w-full px-4 py-2.5 bg-white border border-amber-200/60 focus:border-amber-500 focus:ring-amber-500/50 rounded-xl text-sm text-gray-900 shadow-sm"
+                        type="email" name="email" :value="old('email')" required autofocus autocomplete="username" placeholder="usuario@cyberprotocol.com" />
+                    <x-input-error :messages="$errors->get('email')" class="mt-1" />
+                </div>
+
+                <div>
+                    <x-input-label for="password" :value="__('Contraseña')" class="block text-xs font-serif uppercase tracking-wider text-amber-950 font-bold mb-1" />
+                    <x-text-input id="password" class="block w-full px-4 py-2.5 bg-white border border-amber-200/60 focus:border-amber-500 focus:ring-amber-500/50 rounded-xl text-sm text-gray-900 shadow-sm"
+                        type="password" name="password" required autocomplete="current-password" placeholder="Ingrese su contraseña" />
+                    <x-input-error :messages="$errors->get('password')" class="mt-1" />
+                </div>
+
+                <label for="remember_me" class="flex items-center gap-2 cursor-pointer select-none">
+                    <input id="remember_me" type="checkbox" name="remember" class="rounded border-amber-300 text-amber-600 focus:ring-amber-500 shadow-sm">
+                    <span class="text-sm text-gray-600 font-medium">{{ __('Recordarme') }}</span>
+                </label>
+
+                <x-primary-button class="w-full justify-center">
+                    {{ __('Iniciar Sesión') }}
+                </x-primary-button>
+
+                <div class="pt-3 border-t border-amber-200/40 space-y-2 text-center text-xs">
+                    @if (Route::has('password.request'))
+                    <a class="block text-amber-700 hover:text-amber-900 font-medium underline underline-offset-2 transition-colors" href="{{ route('password.request') }}">
+                        {{ __('¿Olvidó su contraseña?') }}
+                    </a>
+                    @endif
+                    <a class="block text-amber-700 hover:text-amber-900 font-medium underline underline-offset-2 transition-colors" href="{{ route('register') }}">
+                        {{ __('¿No tienes cuenta? Registrate') }}
+                    </a>
+                </div>
+            </form>
         </div>
-    </form>
-</x-guest-layout>
+    </div>
+</body>
+
+</html>

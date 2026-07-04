@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Venta;
 use App\Models\Cliente;
+use App\Exports\VentasExport;
 use Illuminate\Http\Request;
 
 class VentaController extends Controller
@@ -49,6 +50,11 @@ class VentaController extends Controller
             'consumidorFinal',
             'clienteSeleccionado'
         ));
+    }
+
+    public function exportExcel()
+    {
+        return (new VentasExport)->download();
     }
 
     public function store(Request $request)

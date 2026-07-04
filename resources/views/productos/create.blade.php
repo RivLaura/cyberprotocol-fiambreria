@@ -21,7 +21,7 @@
 
             <div class="bg-white overflow-hidden rounded-2xl border border-amber-100 shadow-md p-6 md:p-8">
                 
-                <form action="{{ route('productos.store') }}" method="POST" class="space-y-6">
+                <form action="{{ route('productos.store') }}" method="POST" class="space-y-6" enctype="multipart/form-data">
                     <!-- El formulario de creación de producto se diseñó para ser intuitivo y fácil de usar, siguiendo las mejores prácticas de UX/UI. 
                      Se organizaron los campos en una cuadrícula responsiva para mejorar la legibilidad y facilitar la navegación, especialmente en dispositivos móviles. 
                      Cada campo incluye etiquetas claras y mensajes de error específicos para guiar al usuario en caso de entradas inválidas, asegurando una experiencia fluida y sin frustraciones. -->
@@ -104,6 +104,15 @@
                                 class="w-full rounded-xl border-amber-200 focus:border-amber-500 focus:ring focus:ring-amber-200/50 bg-amber-50/10 text-sm font-mono transition-all duration-200 py-3">
                             @error('fecha_vencimiento') <span class="text-red-500 text-xs mt-1 block font-medium">{{ $message }}</span> @enderror
                         </div>
+                    </div>
+
+                    {{-- Campo: Imagen del producto --}}
+                    <div class="mt-4">
+                        <label for="imagen" class="block text-xs font-serif uppercase tracking-wider text-amber-950 font-bold mb-2">Imagen del producto (Opcional)</label>
+                        <input type="file" name="imagen" id="imagen" accept="image/jpeg,image/png,image/webp"
+                            class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-bold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100 file:cursor-pointer cursor-pointer border border-gray-300 rounded-xl px-3 py-2 focus:border-amber-500 focus:ring-amber-500">
+                        <p class="mt-1 text-[10px] font-sans font-bold tracking-wider text-amber-900/50 uppercase">JPG, PNG o WEBP. Max 2MB.</p>
+                        @error('imagen') <span class="text-red-500 text-xs mt-1 block font-medium">{{ $message }}</span> @enderror
                     </div>
 
                     {{-- Campo: Descripción --}}

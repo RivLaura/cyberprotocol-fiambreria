@@ -1,25 +1,59 @@
-<x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600">
-        {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{{ config('app.name', 'CyberProtocol') }} - Fiambrería</title>
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+
+<body class="min-h-screen flex flex-col justify-center items-center bg-stone-100 px-4 py-8 font-sans text-gray-900 antialiased">
+    <div class="w-full max-w-sm sm:max-w-md bg-white rounded-2xl border border-amber-100 shadow-lg overflow-hidden">
+        <div class="bg-gradient-to-r from-amber-800 to-amber-950 px-6 py-5 text-center">
+            <h2 class="font-serif text-xl font-bold text-amber-50 tracking-wide">
+                ¿Olvidaste tu contraseña?
+            </h2>
+            <p class="text-amber-200/50 text-xs mt-1">
+                Recuperá el acceso a tu cuenta
+            </p>
+        </div>
+
+        <a href="{{ url('/') }}"
+            class="mr-4 text-sm text-amber-700 hover:text-amber-900 font-semibold">
+            ← Volver al inicio
+        </a>
+
+        <div class="px-7 py-6">
+            <div class="text-xs text-gray-500 leading-relaxed mb-4">
+                {{ __('Ingresá tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña.') }}
+            </div>
+            <x-auth-session-status class="mb-4" :status="session('status')" />
+            <form method="POST" action="{{ route('password.email') }}">
+                @csrf
+                <div class="space-y-4">
+                    <div>
+                        <x-input-label for="email" :value="__('Correo Electrónico')" class="block text-xs font-serif uppercase tracking-wider text-amber-950 font-bold mb-1" />
+                        <x-text-input id="email" class="block w-full px-4 py-2.5 bg-white border border-amber-200/60 focus:border-amber-500 focus:ring-amber-500/50 rounded-xl text-sm text-gray-900 shadow-sm"
+                            type="email" name="email" :value="old('email')" required autofocus placeholder="tu@correo.com" />
+                        <x-input-error :messages="$errors->get('email')" class="mt-1" />
+                    </div>
+                    <x-primary-button class="w-full justify-center">
+                        {{ __('Enviar enlace') }}
+                    </x-primary-button>
+                </div>
+                <div class="pt-3 mt-4 border-t border-amber-200/40 text-center text-xs">
+                    <a class="text-amber-700 hover:text-amber-900 font-medium underline underline-offset-2 transition-colors" href="{{ route('login') }}">
+                        {{ __('Volver al inicio de sesión') }}
+                    </a>
+                </div>
+            </form>
+        </div>
     </div>
+</body>
 
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
-
-    <form method="POST" action="{{ route('password.email') }}">
-        @csrf
-
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Email Password Reset Link') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+</html>

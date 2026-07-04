@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductoRequest;
 use App\Models\Producto;
 use App\Models\Categoria;
+use Illuminate\Support\Facades\Storage;
 
 class ProductoController extends Controller
 {
@@ -19,11 +20,14 @@ class ProductoController extends Controller
 
             ->when($buscar, function ($query) use ($buscar) {
 
-                $query->where('nombre', 'like', "%{$buscar}%")
-                    ->orWhereHas('categoria', function ($q) use ($buscar) {
+                $query->where(function ($q) use ($buscar) {
 
-                        $q->where('nombre', 'like', "%{$buscar}%");
-                    });
+                    $q->where('nombre', 'like', "%{$buscar}%")
+                        ->orWhereHas('categoria', function ($categoria) use ($buscar) {
+
+                            $categoria->where('nombre', 'like', "%{$buscar}%");
+                        });
+                });
             })
 
             ->orderBy('nombre')
@@ -32,7 +36,9 @@ class ProductoController extends Controller
 
             ->withQueryString();
 
-        return view('productos.index', compact('productos', 'buscar'));
+        $categorias = Categoria::all();
+
+        return view('productos.index', compact('productos', 'buscar', 'categorias'));
     }
 
     /**
@@ -50,16 +56,13 @@ class ProductoController extends Controller
      */
     public function store(ProductoRequest $request)
     {
-        Producto::create([
-            'nombre' => $request->nombre,
-            'descripcion' => $request->descripcion,
-            'precio' => $request->precio,
-            'stock' => $request->stock,
-            'stock_minimo' => $request->stock_minimo,
-            'fecha_elaboracion' => $request->fecha_elaboracion,
-            'fecha_vencimiento' => $request->fecha_vencimiento,
-            'categoria_id' => $request->categoria_id,
-        ]);
+        $data = $request->validated();
+
+        if ($request->hasFile('imagen')) {
+            $data['imagen'] = $request->file('imagen')->store('productos', 'public');
+        }
+
+        Producto::create($data);
 
         return redirect()
             ->route('productos.index')
@@ -77,32 +80,41 @@ class ProductoController extends Controller
     /**
      * Muestra el formulario para editar un producto específico.
      */
-    public function edit(string $id)
+    public function edit(Producto $producto)
     {
-        $producto = Producto::findOrFail($id);
+        $categorias = Categoria::orderBy('nombre')->get();
 
-        $categorias = Categoria::all();
-
-        return view('productos.edit', compact('producto', 'categorias'));
+        return view('productos.edit', compact(
+            'producto',
+            'categorias'
+        ));
     }
 
     /**
      * Actualiza el recurso especificado en el almacenamiento.
      */
-    public function update(ProductoRequest $request, string $id)
+    public function update(ProductoRequest $request, Producto $producto)
     {
-        $producto = Producto::findOrFail($id);
+        $data = $request->validated();
 
-        $producto->update([
-            'nombre' => $request->nombre,
-            'descripcion' => $request->descripcion,
-            'precio' => $request->precio,
-            'stock' => $request->stock,
-            'stock_minimo' => $request->stock_minimo,
-            'fecha_elaboracion' => $request->fecha_elaboracion,
-            'fecha_vencimiento' => $request->fecha_vencimiento,
-            'categoria_id' => $request->categoria_id,
-        ]);
+        if ($request->hasFile('imagen')) {
+
+            if (
+                $producto->imagen &&
+                Storage::disk('public')->exists($producto->imagen)
+            ) {
+                Storage::disk('public')->delete($producto->imagen);
+            }
+
+            $data['imagen'] = $request
+                ->file('imagen')
+                ->store('productos', 'public');
+        } else {
+
+            unset($data['imagen']);
+        }
+
+        $producto->update($data);
 
         return redirect()
             ->route('productos.index')
@@ -112,9 +124,14 @@ class ProductoController extends Controller
     /**
      * Elimina el recurso especificado del almacenamiento.
      */
-    public function destroy(string $id)
+    public function destroy(Producto $producto)
     {
-        $producto = Producto::findOrFail($id);
+        if (
+            $producto->imagen &&
+            Storage::disk('public')->exists($producto->imagen)
+        ) {
+            Storage::disk('public')->delete($producto->imagen);
+        }
 
         $producto->delete();
 

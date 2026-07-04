@@ -34,6 +34,8 @@ class ProductoRequest extends FormRequest
             'fecha_elaboracion' => 'required|date',
 
             'fecha_vencimiento' => 'required|date|after:fecha_elaboracion',
+
+            'imagen' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ];
     }
 
@@ -48,6 +50,9 @@ class ProductoRequest extends FormRequest
             'categoria_id.required' => 'Debe seleccionar una categoría.',
             'fecha_elaboracion.required' => 'Debe ingresar la fecha de elaboración.',
             'fecha_vencimiento.after' => 'La fecha de vencimiento debe ser posterior a la elaboración.',
+            'imagen.image' => 'El archivo debe ser una imagen.',
+            'imagen.mimes' => 'La imagen debe ser JPG, PNG o WEBP.',
+            'imagen.max' => 'La imagen no puede superar los 2 MB.',
         ];
     }
 }

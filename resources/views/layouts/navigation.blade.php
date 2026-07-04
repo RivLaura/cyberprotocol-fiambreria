@@ -14,7 +14,7 @@
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
 
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        Dashboard
+                        Panel
                     </x-nav-link>
 
                     <x-nav-link :href="route('categorias.index')" :active="request()->routeIs('categorias.*')">
@@ -26,11 +26,9 @@
                         Productos
                     </x-nav-link>
 
-                    <a href="#"
-                    class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700">
+                    <x-nav-link :href="route('ventas.index')" :active="request()->routeIs('ventas.*')">
                         Ventas
-                        <span class="ml-1 text-xs text-amber-600">(Próx.)</span>
-                    </a>
+                    </x-nav-link>
 
                 </div>
 
@@ -92,7 +90,7 @@
         <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
 
             <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                Dashboard
+                Panel
             </x-nav-link>
 
             <x-nav-link :href="route('categorias.index')" :active="request()->routeIs('categorias.*')">
@@ -104,10 +102,9 @@
                 Productos
             </x-nav-link>
 
-            <a href="#"
-            class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700">
+            <x-nav-link :href="route('ventas.index')" :active="request()->routeIs('ventas.*')">
                 Ventas
-            </a>
+            </x-nav-link>
 
         </div>
 

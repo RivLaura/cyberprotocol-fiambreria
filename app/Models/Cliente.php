@@ -32,17 +32,4 @@ class Cliente extends Model
         return $this->hasMany(Venta::class);
     }
 
-    // Método para obtener o crear el cliente "Consumidor Final"
-    public static function consumidorFinal(): self
-    {
-        return self::firstOrCreate(
-            ['documento' => '00000000'],
-            [
-                'nombre' => 'Consumidor',
-                'apellido' => 'Final',
-                'telefono' => null,
-                'email' => null,
-            ]
-        );
-    }
 }
