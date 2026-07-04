@@ -15,8 +15,8 @@ class DashboardController extends Controller
     {
         $productos = Producto::with('categoria')
             ->orderBy('nombre')
-            ->get();
-
+            ->paginate(12);
+            
         $categorias = Categoria::orderBy('nombre')->get();
 
         $clientes = Cliente::orderBy('nombre')->get();

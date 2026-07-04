@@ -13,14 +13,22 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        // 1. Buscamos todos los productos con su categoría
-        $productos = Producto::with('categoria')->get();
+        $buscar = request('buscar');
 
-        // 2. Buscamos los productos cuyo stock es menor o igual al stock_minimo configurado
-        $productosStockBajo = Producto::whereRaw('stock <= stock_minimo', [], 'and')->get();
+        $productos = Producto::with('categoria')
 
-        // 3. Enviamos ambas variables a la vista de productos
-        return view('productos.index', compact('productos', 'productosStockBajo'));
+            ->when($buscar, function ($query) use ($buscar) {
+
+                $query->where('nombre', 'like', "%{$buscar}%");
+            })
+
+            ->orderBy('nombre')
+
+            ->paginate(10)
+
+            ->withQueryString();
+
+        return view('productos.index', compact('productos', 'buscar'));
     }
 
     /**

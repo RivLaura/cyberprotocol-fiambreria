@@ -89,75 +89,8 @@
                     Seleccione los productos para comenzar una nueva venta.
                 </p>
 
-                <!-- Buscador -->
-                <div class="relative">
-
-                    <span class="absolute left-4 top-3 text-stone-400">
-
-                        🔍
-
-                    </span>
-
-                    <input
-                        type="text"
-                        placeholder="Buscar productos..."
-                        class="w-full rounded-xl border border-stone-300 pl-12 pr-4 py-3 focus:ring-amber-600 focus:border-amber-600">
-
-                </div>
-
-                <!-- Categorías -->
-
-                <div class="flex gap-3 mb-6 flex-wrap">
-
-                    <button
-                        class="rounded-full bg-amber-700 text-white px-5 py-2 shadow hover:bg-amber-800">
-
-                        Todos
-
-                    </button>
-
-                    <button
-                        class="rounded-full border border-stone-300 bg-white px-5 py-2 hover:bg-stone-100 transition">
-
-                        Fiambres
-
-                    </button>
-
-                    <button
-                        class="rounded-full border border-stone-300 bg-white px-5 py-2 hover:bg-stone-100 transition">
-
-                        Quesos
-
-                    </button>
-
-                    <button
-                        class="rounded-full border border-stone-300 bg-white px-5 py-2 hover:bg-stone-100 transition">
-
-                        Embutidos
-
-                    </button>
-
-                    <button
-                        class="rounded-full border border-stone-300 bg-white px-5 py-2 hover:bg-stone-100 transition">
-
-                        Bebidas
-
-                    </button>
-
-                </div>
-
                 <!-- Acá irán las tarjetas -->
-
-                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-
-                    @foreach($productos as $producto)
-
-                    <x-pos.producto-card
-                        :producto="$producto" />
-
-                    @endforeach
-
-                </div>
+                <livewire:pos.catalogo-productos />
 
             </section>
 

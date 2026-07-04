@@ -32,6 +32,21 @@
             </div>
             @endif
 
+            <div class="mb-6">
+
+                <form method="GET" action="{{ route('productos.index') }}">
+
+                    <input
+                        type="text"
+                        name="buscar"
+                        value="{{ $buscar }}"
+                        placeholder="Buscar producto..."
+                        class="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-amber-500 focus:ring-amber-500">
+
+                </form>
+
+            </div>
+
             <div class="bg-white overflow-hidden rounded-2xl border border-amber-100 shadow-md">
 
                 @forelse($productos as $producto)
