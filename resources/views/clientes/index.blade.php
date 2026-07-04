@@ -5,6 +5,7 @@
         </h2>
     </x-slot>
 
+
     <div class="py-8">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white shadow rounded-lg p-6">
@@ -20,7 +21,27 @@
                     </a>
                 </div>
 
-                {{-- Espacio reservado para futuras búsquedas --}}
+                @if(session('success'))
+
+                <div class="mb-4 rounded-lg bg-green-100 border border-green-300 text-green-700 px-4 py-3">
+
+                    {{ session('success') }}
+
+                </div>
+
+                @endif
+
+                @if(session('error'))
+
+                <div class="mb-4 rounded-lg bg-red-100 border border-red-300 text-red-700 px-4 py-3">
+
+                    {{ session('error') }}
+
+                </div>
+
+                @endif
+
+                {{-- Buscador --}}
                 <div class="mb-6">
                     <input
                         type="text"
@@ -59,41 +80,67 @@
                         <tbody class="divide-y divide-gray-200 bg-white">
 
                             @forelse ($clientes as $cliente)
-                                <tr>
+                            <tr>
 
-                                    <td class="px-6 py-4">
-                                        {{ $cliente->nombre }}
-                                    </td>
+                                <td class="px-6 py-4">
+                                    {{ $cliente->nombre }}
+                                </td>
 
-                                    <td class="px-6 py-4">
-                                        {{ $cliente->apellido }}
-                                    </td>
+                                <td class="px-6 py-4">
+                                    {{ $cliente->apellido }}
+                                </td>
 
-                                    <td class="px-6 py-4">
-                                        {{ $cliente->telefono ?? '-' }}
-                                    </td>
+                                <td class="px-6 py-4">
+                                    {{ $cliente->telefono ?? '-' }}
+                                </td>
 
-                                    <td class="px-6 py-4">
-                                        {{ $cliente->email ?? '-' }}
-                                    </td>
+                                <td class="px-6 py-4">
+                                    {{ $cliente->email ?? '-' }}
+                                </td>
 
-                                    <td class="px-6 py-4 text-center">
-                                        <button
-                                            class="px-3 py-1 bg-gray-300 text-gray-600 rounded cursor-not-allowed"
-                                            disabled>
+                                <td class="px-6 py-4 text-center">
+
+                                    <div class="flex justify-center gap-2">
+
+                                        <a
+                                            href="{{ route('clientes.edit', $cliente->id) }}"
+                                            class="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700">
+
                                             Editar
-                                        </button>
-                                    </td>
 
-                                </tr>
+                                        </a>
+
+                                        <form
+                                            action="{{ route('clientes.destroy', $cliente->id) }}"
+                                            method="POST"
+                                            onsubmit="return confirm('¿Está seguro que desea eliminar este cliente?');">
+
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button
+                                                type="submit"
+                                                class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700">
+
+                                                Eliminar
+
+                                            </button>
+
+                                        </form>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
 
                             @empty
 
-                                <tr>
-                                    <td colspan="5" class="px-6 py-6 text-center text-gray-500">
-                                        No hay clientes registrados.
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td colspan="5" class="px-6 py-6 text-center text-gray-500">
+                                    No hay clientes registrados.
+                                </td>
+                            </tr>
 
                             @endforelse
 

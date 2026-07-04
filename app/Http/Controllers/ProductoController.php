@@ -19,7 +19,11 @@ class ProductoController extends Controller
 
             ->when($buscar, function ($query) use ($buscar) {
 
-                $query->where('nombre', 'like', "%{$buscar}%");
+                $query->where('nombre', 'like', "%{$buscar}%")
+                    ->orWhereHas('categoria', function ($q) use ($buscar) {
+
+                        $q->where('nombre', 'like', "%{$buscar}%");
+                    });
             })
 
             ->orderBy('nombre')

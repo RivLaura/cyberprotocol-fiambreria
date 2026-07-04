@@ -36,4 +36,18 @@ class ProductoRequest extends FormRequest
             'fecha_vencimiento' => 'required|date|after:fecha_elaboracion',
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'nombre.required' => 'El nombre es obligatorio.',
+            'precio.required' => 'El precio es obligatorio.',
+            'precio.gt' => 'El precio debe ser mayor a cero.',
+            'stock.required' => 'El stock es obligatorio.',
+            'stock.min' => 'El stock no puede ser negativo.',
+            'categoria_id.required' => 'Debe seleccionar una categoría.',
+            'fecha_elaboracion.required' => 'Debe ingresar la fecha de elaboración.',
+            'fecha_vencimiento.after' => 'La fecha de vencimiento debe ser posterior a la elaboración.',
+        ];
+    }
 }

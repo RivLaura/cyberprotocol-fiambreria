@@ -21,6 +21,19 @@ class VentaController extends Controller
     }
 
     /**
+     * Mostrar el detalle de una venta
+     */
+    public function show(Venta $venta)
+    {
+        $venta->load([
+            'cliente',
+            'detalle_ventas.producto'
+        ]);
+
+        return view('ventas.show', compact('venta'));
+    }
+
+    /**
      * Mostrar formulario de nueva venta (POS)
      */
     public function create()

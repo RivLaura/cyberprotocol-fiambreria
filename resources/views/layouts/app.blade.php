@@ -25,13 +25,24 @@
 
         @include('layouts.sidebar')
 
-        <main class="flex-1 p-8">
+        <div class="flex-1">
 
-            {{ $slot }}
+            @isset($header)
+            <header class="bg-white shadow-sm border-b">
+                <div class="px-8 py-6">
+                    {{ $header }}
+                </div>
+            </header>
+            @endisset
 
-        </main>
+            <main class="p-8">
+                {{ $slot }}
+            </main>
+
+        </div>
 
     </div>
+    
     @livewireScriptConfig
 </body>
 

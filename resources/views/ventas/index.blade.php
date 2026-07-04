@@ -14,11 +14,6 @@
                 <h2 class="text-2xl font-bold text-gray-800">
                     Historial de Ventas
                 </h2>
-
-                <a href="{{ route('ventas.create') }}"
-                    class="bg-amber-700 hover:bg-amber-800 text-white px-5 py-2 rounded-lg shadow">
-                    Nueva Venta
-                </a>
             </div>
         </x-slot>
 
@@ -71,9 +66,9 @@
                                     <td class="px-6 py-4">
 
                                         @if($venta->cliente)
-                                            {{ $venta->cliente->nombre }} {{ $venta->cliente->apellido }}
+                                        {{ $venta->cliente->nombre }} {{ $venta->cliente->apellido }}
                                         @else
-                                            Consumidor Final
+                                        Consumidor Final
                                         @endif
 
                                     </td>
@@ -86,12 +81,13 @@
 
                                     <td class="px-6 py-4 text-center">
 
-                                        <button
+                                        <a
+                                            href="{{ route('ventas.show', $venta) }}"
                                             class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
 
                                             Ver detalle
 
-                                        </button>
+                                        </a>
 
                                     </td>
 

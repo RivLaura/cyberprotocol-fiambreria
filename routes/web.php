@@ -53,11 +53,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/productos', [ProductoController::class, 'store'])
         ->name('productos.store');
 
-    // NUEVA RUTA 1: Muestra el formulario de edición (FIAMB-100)
     Route::get('/productos/{id}/editar', [ProductoController::class, 'edit'])
         ->name('productos.edit');
 
-    // NUEVA RUTA 2: Procesa la actualización en la base de datos (FIAMB-100)
     Route::put('/productos/{id}', [ProductoController::class, 'update'])
         ->name('productos.update');
 
@@ -75,9 +73,21 @@ Route::middleware('auth')->group(function () {
     Route::post('/clientes', [ClienteController::class, 'store'])
         ->name('clientes.store');
 
+    Route::get('/clientes/{cliente}/edit', [ClienteController::class, 'edit'])
+        ->name('clientes.edit');
+
+    Route::put('/clientes/{cliente}', [ClienteController::class, 'update'])
+        ->name('clientes.update');
+
+    Route::delete('/clientes/{cliente}', [ClienteController::class, 'destroy'])
+        ->name('clientes.destroy');
+
     // VENTAS
     Route::get('/ventas', [VentaController::class, 'index'])
         ->name('ventas.index');
+
+    Route::get('/ventas/{venta}', [VentaController::class, 'show'])
+        ->name('ventas.show');
 
     Route::get('/ventas/create', [VentaController::class, 'create'])
         ->name('ventas.create');
@@ -94,14 +104,13 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/carrito', [CarritoController::class, 'clear'])
         ->name('carrito.clear');
-    
+
     Route::delete('/carrito/{producto}', [CarritoController::class, 'destroy'])
-    ->name('carrito.destroy');
+        ->name('carrito.destroy');
 
     // PROCESAR VENTA
     Route::post('/ventas/procesar', [VentaProcesoController::class, 'store'])
-    ->name('ventas.procesar');
-
+        ->name('ventas.procesar');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
