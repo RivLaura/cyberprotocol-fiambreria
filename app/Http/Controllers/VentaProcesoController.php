@@ -62,18 +62,36 @@ class VentaProcesoController extends Controller
 
                     $producto = Producto::find($item['id']);
 
+                    // Verificar que haya stock suficiente
+                    if ($producto->stock < $item['cantidad']) {
+
+                        throw new \Exception(
+                            "Stock insuficiente para {$producto->nombre}."
+                        );
+                    }
+
+                    // Descontar stock
                     $producto->decrement('stock', $item['cantidad']);
                 }
             }
 
             DB::commit();
 
-            dd('Venta creada correctamente');
+            // Vaciar el carrito
+            session()->forget('carrito');
+
+            // Volver al Dashboard
+            return redirect()
+                ->route('dashboard')
+                ->with('success', 'Venta registrada correctamente.');
         } catch (\Exception $e) {
 
             DB::rollBack();
 
-            dd($e->getMessage());
+            return redirect()
+                ->route('dashboard')
+                ->with('error', $e->getMessage());
+
         }
     }
 }

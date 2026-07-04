@@ -75,6 +75,16 @@
 
                 @endif
 
+                @if(session('success'))
+
+                <div class="mt-4 mb-4 rounded-lg bg-green-100 border border-green-300 text-green-700 px-4 py-3">
+
+                    {{ session('success') }}
+
+                </div>
+
+                @endif
+
                 <p class="text-stone-500 mt-1 mb-6">
                     Seleccione los productos para comenzar una nueva venta.
                 </p>
