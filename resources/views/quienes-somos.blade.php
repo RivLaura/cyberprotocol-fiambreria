@@ -268,11 +268,11 @@
                     </h3>
 
                     <p class="text-sm font-semibold text-amber-700">
-                        Project Manager
+                        Gerente de Proyecto
                     </p>
 
                     <p class="mt-2 text-xs text-gray-500">
-                        Backend Developer
+                        Desarrolladora Backend
                     </p>
 
                     <ul class="mt-6 space-y-2 text-sm text-gray-700 text-left">
@@ -299,7 +299,7 @@
                     </h3>
 
                     <p class="text-sm font-semibold text-amber-700">
-                        Backend Developer
+                        Desarrollador Backend
                     </p>
 
                     <ul class="mt-6 space-y-2 text-sm text-gray-700 text-left">
@@ -325,7 +325,7 @@
                     </h3>
 
                     <p class="text-sm font-semibold text-amber-700">
-                        Frontend Developer
+                        Desarrollador Frontend
                     </p>
 
                     <ul class="mt-6 space-y-2 text-sm text-gray-700 text-left">
