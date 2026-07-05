@@ -88,6 +88,26 @@
     {{-- Menú de Navegación Responsivo --}}
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
 
+        <div class="pt-2 pb-3 space-y-1">
+            <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                Panel
+            </x-nav-link>
+
+            <x-nav-link :href="route('categorias.index')" :active="request()->routeIs('categorias.*')">
+                Categorías
+            </x-nav-link>
+
+            <!-- TRAZABILIDAD JIRA: FIAMB-97 - Menú responsivo de Productos -->
+            <x-nav-link :href="route('productos.index')" :active="request()->routeIs('productos.*')">
+                Productos
+            </x-nav-link>
+
+            <x-nav-link :href="route('ventas.index')" :active="request()->routeIs('ventas.*')">
+                Ventas
+            </x-nav-link>
+
+        </div>
+
         {{-- Opciones de Configuración Responsivas --}}
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="px-4">
