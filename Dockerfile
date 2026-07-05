@@ -18,7 +18,7 @@ WORKDIR /var/www/html
 COPY . .
 
 RUN php -v && php -m
-RUN composer install --no-dev --optimize-autoloader --no-interaction 2>&1
+RUN composer install --optimize-autoloader --no-interaction 2>&1
 RUN npm ci --loglevel verbose 2>&1
 RUN npm run build 2>&1
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
