@@ -87,8 +87,8 @@
 
     {{-- Menú de Navegación Responsivo --}}
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
 
+        <div class="pt-2 pb-3 space-y-1">
             <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 Panel
             </x-nav-link>
