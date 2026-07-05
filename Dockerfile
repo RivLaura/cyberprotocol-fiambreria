@@ -34,6 +34,7 @@ CMD mkdir -p /data && chown www-data:www-data /data && \
     touch /data/database.sqlite && chown www-data:www-data /data/database.sqlite && \
     php artisan storage:link --force 2>&1 || true && \
     php artisan migrate --force 2>&1 && \
+    php artisan db:seed --force 2>&1 && \
     php artisan config:cache 2>&1 && \
     php artisan route:cache 2>&1 && \
     php artisan view:cache 2>&1 && \
