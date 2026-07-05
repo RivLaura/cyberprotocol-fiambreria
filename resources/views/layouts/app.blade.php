@@ -19,25 +19,28 @@
     @livewireStyles
 </head>
 
-<body class="font-sans antialiased bg-stone-100">
+<body class="font-sans antialiased bg-stone-100" x-data="{ sidebarOpen: false }">
 
     @include('layouts.topbar')
+
+    {{-- Overlay para mobile cuando el sidebar está abierto --}}
+    <div x-show="sidebarOpen" x-cloak @click="sidebarOpen = false" class="fixed inset-0 z-20 bg-black/50 md:hidden transition-opacity"></div>
 
     <div class="flex pt-16">
 
         @include('layouts.sidebar')
 
-        <div class="flex-1 pl-56">
+        <div class="flex-1 min-w-0 md:pl-56">
 
             @isset($header)
             <header class="bg-white shadow-sm border-b">
-                <div class="px-8 py-6">
+                <div class="px-4 sm:px-8 py-6">
                     {{ $header }}
                 </div>
             </header>
             @endisset
 
-            <main class="p-8">
+            <main class="p-4 sm:p-8">
                 {{ $slot }}
             </main>
 

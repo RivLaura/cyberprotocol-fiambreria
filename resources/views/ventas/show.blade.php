@@ -38,9 +38,9 @@
 
                 <h3 class="font-serif text-lg font-bold text-amber-950 mb-4">Productos vendidos</h3>
 
-                <div class="overflow-x-auto">
-                    <table class="w-full divide-y divide-amber-100">
-                        <thead class="bg-gradient-to-r from-gray-50 to-amber-50/30">
+                <div>
+                    <table class="w-full divide-y divide-amber-100 block md:table">
+                        <thead class="bg-gradient-to-r from-gray-50 to-amber-50/30 hidden md:table-header-group">
                             <tr>
                                 <th class="px-6 py-4 text-left text-xs font-serif uppercase tracking-wider text-amber-950 font-bold">Producto</th>
                                 <th class="px-6 py-4 text-center text-xs font-serif uppercase tracking-wider text-amber-950 font-bold">Cantidad</th>
@@ -48,20 +48,37 @@
                                 <th class="px-6 py-4 text-right text-xs font-serif uppercase tracking-wider text-amber-950 font-bold">Subtotal</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-gray-100 bg-white">
+                        <tbody class="divide-y divide-gray-100 bg-white block md:table-row-group">
                             @foreach($venta->detalle_ventas as $detalle)
-                            <tr class="hover:bg-amber-50/40 transition-all duration-200">
-                                <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ $detalle->producto->nombre }}</td>
-                                <td class="px-6 py-4 text-center text-sm text-gray-700">{{ $detalle->cantidad }}</td>
-                                <td class="px-6 py-4 text-right text-sm font-mono text-gray-700">${{ number_format($detalle->precio_unitario,2,',','.') }}</td>
-                                <td class="px-6 py-4 text-right text-sm font-mono font-bold text-gray-900">${{ number_format($detalle->subtotal,2,',','.') }}</td>
+                            <tr class="flex flex-col md:table-row mb-4 md:mb-0 border-2 border-amber-100 md:border-0 bg-white rounded-2xl md:rounded-none p-4 md:p-0 shadow-sm md:shadow-none hover:shadow-md md:hover:shadow-none transition-all duration-200">
+                                <td class="md:px-6 md:py-4 text-sm font-medium text-gray-900 md:table-cell">
+                                    <span class="md:hidden text-[10px] font-sans font-bold tracking-wider text-amber-900/50 uppercase block mb-0.5">Producto</span>
+                                    {{ $detalle->producto->nombre }}
+                                </td>
+                                <td class="md:px-6 md:py-4 text-sm text-gray-700 md:table-cell md:text-center">
+                                    <span class="md:hidden text-[10px] font-sans font-bold tracking-wider text-amber-900/50 uppercase block mb-0.5">Cantidad</span>
+                                    {{ $detalle->cantidad }}
+                                </td>
+                                <td class="md:px-6 md:py-4 text-sm font-mono text-gray-700 md:table-cell md:text-right">
+                                    <span class="md:hidden text-[10px] font-sans font-bold tracking-wider text-amber-900/50 uppercase block mb-0.5">Precio Unitario</span>
+                                    ${{ number_format($detalle->precio_unitario,2,',','.') }}
+                                </td>
+                                <td class="md:px-6 md:py-4 text-sm font-mono font-bold text-gray-900 md:table-cell md:text-right">
+                                    <span class="md:hidden text-[10px] font-sans font-bold tracking-wider text-amber-900/50 uppercase block mb-0.5">Subtotal</span>
+                                    ${{ number_format($detalle->subtotal,2,',','.') }}
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
-                        <tfoot class="bg-gradient-to-r from-gray-50 to-amber-50/30">
-                            <tr>
-                                <td colspan="3" class="text-right font-bold px-6 py-4 text-amber-950 font-serif">TOTAL</td>
-                                <td class="text-right font-bold px-6 py-4 text-lg font-mono text-amber-700">${{ number_format($venta->total,2,',','.') }}</td>
+                        <tfoot class="block md:table-footer-group bg-gradient-to-r from-gray-50 to-amber-50/30">
+                            <tr class="flex flex-col md:table-row border-2 border-amber-600 md:border-0 bg-amber-50/50 rounded-2xl md:rounded-none p-4 md:p-0 mt-4 md:mt-0">
+                                <td colspan="3" class="md:px-6 md:py-4 font-bold text-amber-950 font-serif md:text-right md:table-cell">
+                                    <span class="md:hidden text-[10px] font-sans font-bold tracking-wider text-amber-900/50 uppercase block mb-0.5">Total</span>
+                                    TOTAL
+                                </td>
+                                <td class="md:px-6 md:py-4 text-lg font-mono font-bold text-amber-700 md:table-cell md:text-right">
+                                    ${{ number_format($venta->total,2,',','.') }}
+                                </td>
                             </tr>
                         </tfoot>
                     </table>

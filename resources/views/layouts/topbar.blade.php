@@ -1,21 +1,31 @@
 <header class="fixed top-0 left-0 right-0 z-40 bg-gradient-to-r from-amber-900 to-amber-700 shadow-lg border-b border-amber-600/20">
 
-    <div class="mx-auto flex h-16 items-center justify-between px-6">
+    <div class="mx-auto flex h-16 items-center justify-between px-3 sm:px-6">
 
         {{-- Logo + Nombre del sistema --}}
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-2 sm:gap-4">
 
-            <div class="flex h-14 w-14 items-center justify-center rounded-xl overflow-hidden">
-                <img src="{{ asset('images/logo.png') }}" class="h-12 w-12 object-contain">
+            {{-- Botón hamburguesa para mobile --}}
+            <button @click="sidebarOpen = !sidebarOpen" class="md:hidden flex items-center justify-center w-11 h-11 rounded-lg text-amber-200 hover:bg-amber-700/50 hover:text-white transition-all duration-200 cursor-pointer shrink-0">
+                <svg x-show="!sidebarOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+                <svg x-show="sidebarOpen" x-cloak class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+
+            <div class="flex h-10 w-10 sm:h-14 sm:w-14 items-center justify-center rounded-xl overflow-hidden shrink-0">
+                <img src="{{ asset('images/logo.png') }}" class="h-8 w-8 sm:h-12 sm:w-12 object-contain">
             </div>
 
-            <div class="border-l border-amber-500/30 pl-4">
+            <div class="border-l border-amber-500/30 pl-2 sm:pl-4">
 
-                <h1 class="font-serif text-xl tracking-wide text-white leading-tight">
+                <h1 class="font-serif text-base sm:text-xl tracking-wide text-white leading-tight">
                     CyberProtocol
                 </h1>
 
-                <p class="text-[11px] font-sans font-bold tracking-wider text-amber-200/70 uppercase leading-tight mt-0.5">
+                <p class="hidden sm:block text-[11px] font-sans font-bold tracking-wider text-amber-200/70 uppercase leading-tight mt-0.5">
                     Sistema de Gestión para Fiambrería
                 </p>
 
@@ -40,7 +50,7 @@
 
                 </div>
 
-                <div class="w-9 h-9 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 shadow-inner flex items-center justify-center text-white font-bold text-xs ring-2 ring-amber-300/30 shrink-0 overflow-hidden">
+                <div class="w-11 h-11 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 shadow-inner flex items-center justify-center text-white font-bold text-sm ring-2 ring-amber-300/30 shrink-0 overflow-hidden">
                     @if(Auth::user()->profile_photo_url)
                     <img src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" class="w-full h-full object-cover">
                     @else
