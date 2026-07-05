@@ -17,7 +17,7 @@ WORKDIR /var/www/html
 
 COPY . .
 
-RUN php -v && php -m && composer diagnose --no-interaction
+RUN php -v && php -m
 RUN composer install --no-dev --optimize-autoloader --no-interaction 2>&1
 RUN npm ci --loglevel verbose 2>&1
 RUN npm run build 2>&1
