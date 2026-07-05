@@ -52,7 +52,14 @@
                 }
 
             }
-        }">
+        }"
+        x-on:abrir-modal.window="
+            producto = $event.detail;
+            cantidad = '';
+            subtotal = 0;
+            stockValido = true;
+            mostrarModal = true;
+        ">
 
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
@@ -308,10 +315,8 @@
 
         </div>
 
-    </div>
-
-    <!-- MODAL -->
-    <x-pos.modal-cantidad />
+        <!-- MODAL -->
+        <x-pos.modal-cantidad />
 
     </div>
 

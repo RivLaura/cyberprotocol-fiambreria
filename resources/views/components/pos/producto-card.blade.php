@@ -91,16 +91,15 @@ $stockBajo = $producto->stock <= $producto->stock_minimo;
 
             <button
                 type="button"
-                @click="
-                    mostrarModal = true;
 
-                    producto = {
+                 @click="
+                    $dispatch('abrir-modal', {
                         id: {{ $producto->id }},
                         nombre: '{{ $producto->nombre }}',
                         precio: {{ $producto->precio }},
                         categoria: '{{ $producto->categoria->nombre }}',
                         stock: {{ $producto->stock }}
-                    };
+                    });
                 "
                 class="mt-auto w-full inline-flex items-center justify-center px-5 py-2.5 bg-amber-600 hover:bg-amber-500 text-white text-sm font-bold rounded-xl shadow-md hover:shadow-amber-500/20 transform hover:-translate-y-0.5 transition-all duration-200 cursor-pointer">
 
