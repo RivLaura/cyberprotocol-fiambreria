@@ -17,7 +17,10 @@ class ProductoFactory extends Factory
      */
     public function definition(): array
     {
-        $categoria = \App\Models\Categoria::inRandomOrder()->first();
+        $categoriaId = $this->attributes['categoria_id']
+            ?? \App\Models\Categoria::inRandomOrder()->value('id');
+
+        $categoria = \App\Models\Categoria::find($categoriaId);
 
         $productos = [
 
@@ -79,9 +82,20 @@ class ProductoFactory extends Factory
 
             'precio' => fake()->randomFloat(2, 1000, 15000),
 
-            'stock' => fake()->numberBetween(10, 80),
+            'stock' => match ($categoria->nombre) {
 
-            'stock_minimo' => 5,
+                'Bebidas' => fake()->numberBetween(10, 80),
+
+                default => fake()->numberBetween(5000, 50000),
+            },
+
+            'stock_minimo' => match ($categoria->nombre) {
+
+                'Bebidas' => 5,
+
+                default => 1000, // 1 kg
+
+            },
 
             'fecha_elaboracion' => fake()->dateTimeBetween('-20 days', 'now'),
 

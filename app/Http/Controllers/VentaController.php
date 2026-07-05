@@ -4,28 +4,32 @@ namespace App\Http\Controllers;
 
 use App\Models\Venta;
 use App\Models\Cliente;
+use App\Exports\VentasExport;
 use Illuminate\Http\Request;
 
 class VentaController extends Controller
 {
     /**
-     * Mostrar listado de ventas
+     * Mostrar historial de ventas
      */
     public function index()
     {
-        $ventas = Venta::with('cliente', 'detalle_ventas')
-            ->orderBy('created_at', 'desc')
+        $ventas = Venta::with('cliente')
+            ->latest()
             ->paginate(10);
 
         return view('ventas.index', compact('ventas'));
     }
 
     /**
-     * Mostrar detalle de una venta
+     * Mostrar el detalle de una venta
      */
     public function show(Venta $venta)
     {
-        $venta->load('cliente', 'detalle_ventas.producto');
+        $venta->load([
+            'cliente',
+            'detalle_ventas.producto'
+        ]);
 
         return view('ventas.show', compact('venta'));
     }
@@ -34,40 +38,45 @@ class VentaController extends Controller
      * Mostrar formulario de nueva venta (POS)
      */
     public function create()
-{
-    $clientes = Cliente::orderBy('nombre')->get();
+    {
+        $clientes = Cliente::orderBy('nombre')->get();
 
-    $consumidorFinal = Cliente::where('consumidor_final', true)->first();
+        $consumidorFinal = Cliente::where('consumidor_final', true)->first();
 
-    $clienteSeleccionado = $consumidorFinal;
+        $clienteSeleccionado = $consumidorFinal;
 
-    return view('ventas.create', compact(
-        'clientes',
-        'consumidorFinal',
-        'clienteSeleccionado'
-    ));
-}
-
-public function store(Request $request)
-{
-    $request->validate([
-        'cliente_id' => 'nullable|exists:clientes,id',
-        'total' => 'required|numeric|min:0',
-    ]);
-
-    $cliente = Cliente::find($request->cliente_id);
-
-    if (!$cliente) {
-        $cliente = Cliente::where('consumidor_final', true)->first();
+        return view('ventas.create', compact(
+            'clientes',
+            'consumidorFinal',
+            'clienteSeleccionado'
+        ));
     }
 
-    Venta::create([
-        'cliente_id' => $cliente?->id,
-        'total' => $request->total,
-    ]);
+    public function exportExcel()
+    {
+        return (new VentasExport)->download();
+    }
 
-    return redirect()
-        ->route('ventas.create')
-        ->with('success', 'Venta procesada correctamente.');
-}
+    public function store(Request $request)
+    {
+        $request->validate([
+            'cliente_id' => 'nullable|exists:clientes,id',
+            'total' => 'required|numeric|min:0',
+        ]);
+
+        $cliente = Cliente::find($request->cliente_id);
+
+        if (!$cliente) {
+            $cliente = Cliente::where('consumidor_final', true)->first();
+        }
+
+        Venta::create([
+            'cliente_id' => $cliente?->id,
+            'total' => $request->total,
+        ]);
+
+        return redirect()
+            ->route('ventas.create')
+            ->with('success', 'Venta procesada correctamente.');
+    }
 }

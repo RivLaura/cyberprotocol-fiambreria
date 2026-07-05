@@ -23,8 +23,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden rounded-2xl border border-amber-100 shadow-md p-6 md:p-8">
 
-                <form action="{{ route('productos.update', $producto->id) }}" method="POST" class="space-y-6">
-                    <!-- CSRF Token y método PUT para actualización -->
+                <form action="{{ route('productos.update', $producto->id) }}" method="POST" class="space-y-6" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
@@ -49,8 +48,25 @@
                         </div>
                     </div>
 
+                    {{-- Campo: Imagen del producto --}}
                     <div class="mb-4">
-                        <!-- Campo de descripción con textarea -->
+                        <label class="block text-xs font-serif uppercase tracking-wider text-amber-950 font-bold mb-2">Imagen del producto (Opcional)</label>
+                        <div class="flex items-center gap-5">
+                            @if($producto->imagen_url)
+                            <div class="w-20 h-20 rounded-xl overflow-hidden border border-amber-200 shrink-0">
+                                <img src="{{ $producto->imagen_url }}" alt="{{ $producto->nombre }}" class="w-full h-full object-cover">
+                            </div>
+                            @endif
+                            <div class="flex-1">
+                                <input type="file" name="imagen" id="imagen" accept="image/jpeg,image/png,image/webp"
+                                    class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-bold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100 file:cursor-pointer cursor-pointer border border-gray-300 rounded-xl px-3 py-2 focus:border-amber-500 focus:ring-amber-500">
+                                <p class="mt-1 text-[10px] font-sans font-bold tracking-wider text-amber-900/50 uppercase">JPG, PNG o WEBP. Max 2MB. Deja en blanco para mantener la actual.</p>
+                                @error('imagen') <span class="text-red-500 text-xs mt-1 block font-medium">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
                         <label for="descripcion" class="block text-xs font-serif uppercase tracking-wider text-amber-950 font-bold mb-2">Descripción</label>
                         <textarea name="descripcion" id="descripcion" rows="3"
                             class="w-full rounded-xl border-amber-200 focus:border-amber-500 focus:ring focus:ring-amber-200/50 bg-amber-50/10 text-sm transition-all duration-200 py-3">{{ old('descripcion', $producto->descripcion) }}</textarea>

@@ -14,7 +14,7 @@
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
 
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        Dashboard
+                        Panel
                     </x-nav-link>
 
                     <x-nav-link :href="route('categorias.index')" :active="request()->routeIs('categorias.*')">
@@ -90,7 +90,7 @@
         <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
 
             <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                Dashboard
+                Panel
             </x-nav-link>
 
             <x-nav-link :href="route('categorias.index')" :active="request()->routeIs('categorias.*')">

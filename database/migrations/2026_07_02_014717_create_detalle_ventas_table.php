@@ -21,7 +21,16 @@ return new class extends Migration
                 ->constrained('productos')
                 ->cascadeOnDelete();
 
-            // datos del producto en la venta
+            /**
+             * cantidad
+             *
+             * Productos por peso:
+             * gramos vendidos.
+             *
+             * Productos por unidad:
+             * cantidad
+             */
+            
             $table->integer('cantidad');
 
             $table->decimal('precio_unitario', 10, 2);

@@ -19,23 +19,17 @@ class Cliente extends Model
         'email',
     ];
 
+    protected $appends = ['nombre_completo'];
+
+    public function getNombreCompletoAttribute(): string
+    {
+        return trim($this->nombre . ' ' . $this->apellido);
+    }
+
     // Relación con la tabla de ventas
     public function ventas(): HasMany
     {
         return $this->hasMany(Venta::class);
     }
 
-    // Método para obtener o crear el cliente "Consumidor Final"
-    public static function consumidorFinal(): self
-    {
-        return self::firstOrCreate(
-            ['documento' => '00000000'],
-            [
-                'nombre' => 'Consumidor',
-                'apellido' => 'Final',
-                'telefono' => null,
-                'email' => null,
-            ]
-        );
-    }
 }

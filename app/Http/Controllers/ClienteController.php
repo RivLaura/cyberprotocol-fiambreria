@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use App\Http\Requests\ClienteRequest;
 use Illuminate\Http\Request;
 
 class ClienteController extends Controller
@@ -12,7 +13,12 @@ class ClienteController extends Controller
      */
     public function index(Request $request)
     {
-        $buscar = $request->input('buscar');
+        $buscar = trim($request->input('buscar', ''));
+
+        $buscar = str($buscar)
+            ->ascii()
+            ->lower()
+            ->toString();
 
         $clientes = Cliente::query()
             ->when($buscar, function ($query) use ($buscar) {
@@ -39,9 +45,13 @@ class ClienteController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ClienteRequest $request)
     {
-        //
+        Cliente::create($request->validated());
+
+        return redirect()
+            ->route('clientes.index')
+            ->with('success', 'Cliente registrado correctamente.');
     }
 
     /**
@@ -57,15 +67,23 @@ class ClienteController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $cliente = Cliente::findOrFail($id);
+
+        return view('clientes.edit', compact('cliente'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ClienteRequest $request, string $id)
     {
-        //
+        $cliente = Cliente::findOrFail($id);
+
+        $cliente->update($request->validated());
+
+        return redirect()
+            ->route('clientes.index')
+            ->with('success', 'Cliente actualizado correctamente.');
     }
 
     /**
@@ -73,6 +91,18 @@ class ClienteController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $cliente = Cliente::findOrFail($id);
+
+        if ($cliente->ventas()->exists()) {
+            return redirect()
+                ->route('clientes.index')
+                ->with('error', 'No se puede eliminar un cliente que posee ventas registradas.');
+        }
+
+        $cliente->delete();
+
+        return redirect()
+            ->route('clientes.index')
+            ->with('success', 'Cliente eliminado correctamente.');
     }
 }

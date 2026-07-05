@@ -2,60 +2,81 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Http\Requests\ProductoRequest;
 use App\Models\Producto;
 use App\Models\Categoria;
+use Illuminate\Support\Facades\Storage;
 
 class ProductoController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Muestra una lista de productos con su categoría y resalta aquellos con stock bajo.
      */
-    public function index()
-{
-    // 1. Buscamos todos los productos con su categoría
-    $productos = Producto::with('categoria')->get();
+    public function index(Request $request)
+    {
+        $buscar = trim($request->input('buscar', ''));
 
-    // 2. Buscamos los productos cuyo stock es menor o igual al stock_minimo configurado
-    $productosStockBajo = Producto::whereRaw('stock <= stock_minimo', [], 'and')->get();
+        $buscar = str($buscar)
+            ->ascii()
+            ->lower()
+            ->toString();
 
-    // 3. Enviamos ambas variables a la vista de productos
-    return view('productos.index', compact('productos', 'productosStockBajo'));
-}
+        $productos = Producto::with('categoria')
+
+            ->when($buscar, function ($query) use ($buscar) {
+
+                $query->where(function ($q) use ($buscar) {
+
+                    $q->where('nombre', 'like', "%{$buscar}%")
+                        ->orWhereHas('categoria', function ($categoria) use ($buscar) {
+
+                            $categoria->where('nombre', 'like', "%{$buscar}%");
+                        });
+                });
+            })
+
+            ->orderBy('nombre')
+
+            ->paginate(10)
+
+            ->withQueryString();
+
+        $categorias = Categoria::all();
+
+        return view('productos.index', compact('productos', 'buscar', 'categorias'));
+    }
 
     /**
-     * Show the form for creating a new resource.
+     * Muestra el formulario para crear un nuevo producto.
      */
-   public function create()
-{
-    $categorias = Categoria::all();
+    public function create()
+    {
+        $categorias = Categoria::all();
 
-    return view('productos.create', compact('categorias'));
-}
+        return view('productos.create', compact('categorias'));
+    }
 
     /**
-     * Store a newly created resource in storage.
+     * Almacena un nuevo producto en la base de datos.
      */
-   public function store(ProductoRequest $request)
-{
-    Producto::create([
-        'nombre' => $request->nombre,
-        'descripcion' => $request->descripcion,
-        'precio' => $request->precio,
-        'stock' => $request->stock,
-        'stock_minimo' => $request->stock_minimo,
-        'fecha_elaboracion' => $request->fecha_elaboracion,
-        'fecha_vencimiento' => $request->fecha_vencimiento,
-        'categoria_id' => $request->categoria_id,
-    ]);
+    public function store(ProductoRequest $request)
+    {
+        $data = $request->validated();
 
-    return redirect()
-        ->route('productos.index')
-        ->with('success', 'Producto creado correctamente.');
-}
+        if ($request->hasFile('imagen')) {
+            $data['imagen'] = $request->file('imagen')->store('productos', 'public');
+        }
+
+        Producto::create($data);
+
+        return redirect()
+            ->route('productos.index')
+            ->with('success', 'Producto creado correctamente.');
+    }
 
     /**
-     * Display the specified resource.
+     * Muestra el detalle de un producto específico.
      */
     public function show(string $id)
     {
@@ -63,52 +84,65 @@ class ProductoController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Muestra el formulario para editar un producto específico.
      */
-  public function edit(string $id)
-{
-    $producto = Producto::findOrFail($id);
+    public function edit(Producto $producto)
+    {
+        $categorias = Categoria::orderBy('nombre')->get();
 
-    $categorias = Categoria::all();
-
-    return view('productos.edit', compact('producto', 'categorias'));
-}
+        return view('productos.edit', compact(
+            'producto',
+            'categorias'
+        ));
+    }
 
     /**
-     * Update the specified resource in storage.
+     * Actualiza el recurso especificado en el almacenamiento.
      */
-   public function update(ProductoRequest $request, string $id)
-{
-    $producto = Producto::findOrFail($id);
+    public function update(ProductoRequest $request, Producto $producto)
+    {
+        $data = $request->validated();
 
-    $producto->update([
-        'nombre' => $request->nombre,
-        'descripcion' => $request->descripcion,
-        'precio' => $request->precio,
-        'stock' => $request->stock,
-        'stock_minimo' => $request->stock_minimo,
-        'fecha_elaboracion' => $request->fecha_elaboracion,
-        'fecha_vencimiento' => $request->fecha_vencimiento,
-        'categoria_id' => $request->categoria_id,
-    ]);
+        if ($request->hasFile('imagen')) {
 
-    return redirect()
-        ->route('productos.index')
-        ->with('success', 'Producto actualizado correctamente.');
-}
+            if (
+                $producto->imagen &&
+                Storage::disk('public')->exists($producto->imagen)
+            ) {
+                Storage::disk('public')->delete($producto->imagen);
+            }
+
+            $data['imagen'] = $request
+                ->file('imagen')
+                ->store('productos', 'public');
+        } else {
+
+            unset($data['imagen']);
+        }
+
+        $producto->update($data);
+
+        return redirect()
+            ->route('productos.index')
+            ->with('success', 'Producto actualizado correctamente.');
+    }
 
     /**
-     * Remove the specified resource from storage.
+     * Elimina el recurso especificado del almacenamiento.
      */
-   public function destroy(string $id)
-{
-    $producto = Producto::findOrFail($id);
+    public function destroy(Producto $producto)
+    {
+        if (
+            $producto->imagen &&
+            Storage::disk('public')->exists($producto->imagen)
+        ) {
+            Storage::disk('public')->delete($producto->imagen);
+        }
 
-    $producto->delete();
+        $producto->delete();
 
-    return redirect()
-        ->route('productos.index')
-        ->with('success', 'Producto eliminado correctamente.');
-}
-
+        return redirect()
+            ->route('productos.index')
+            ->with('success', 'Producto eliminado correctamente.');
+    }
 }
