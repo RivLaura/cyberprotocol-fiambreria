@@ -9,6 +9,7 @@ use App\Http\Controllers\VentaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\VentaProcesoController;
+use App\Http\Controllers\OpenFoodFactsController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -17,6 +18,10 @@ Route::get('/', function () {
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
+    
+// QUIÉNES SOMOS
+    Route::view('/quienes-somos', 'quienes-somos')
+    ->name('quienes-somos');
 
 Route::middleware('auth')->group(function () {
     // PERFIL
@@ -62,6 +67,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/productos/{producto}', [ProductoController::class, 'destroy'])
         ->name('productos.destroy');
 
+    // OPENFOODFACTS
+    Route::get('/openfoodfacts/{codigo}', [OpenFoodFactsController::class, 'buscar'])
+    ->name('openfoodfacts.buscar');
 
     // CLIENTES
     Route::get('/clientes', [ClienteController::class, 'index'])

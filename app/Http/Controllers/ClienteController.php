@@ -13,7 +13,12 @@ class ClienteController extends Controller
      */
     public function index(Request $request)
     {
-        $buscar = $request->input('buscar');
+        $buscar = trim($request->input('buscar', ''));
+
+        $buscar = str($buscar)
+            ->ascii()
+            ->lower()
+            ->toString();
 
         $clientes = Cliente::query()
             ->when($buscar, function ($query) use ($buscar) {

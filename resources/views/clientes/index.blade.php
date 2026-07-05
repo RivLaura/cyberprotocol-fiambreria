@@ -45,8 +45,7 @@
                 this.$dispatch('open-modal', 'client-form');
             }
         }"
-        class="py-12 bg-amber-50/40 min-h-screen"
-    >
+        class="py-12 bg-amber-50/40 min-h-screen">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
             @if (session('success'))
@@ -72,10 +71,39 @@
             @endif
 
             <div class="mb-6">
-                <div class="relative">
-                    <input type="text" placeholder="Buscar cliente..." disabled
-                        class="w-full rounded-lg border border-gray-300 px-4 py-3 bg-gray-100 text-gray-500 cursor-not-allowed">
-                </div>
+                <form method="GET" action="{{ route('clientes.index') }}" class="mb-6">
+
+                    <div class="relative">
+
+                        <input
+                            type="text"
+                            name="buscar"
+                            value="{{ request('buscar') }}"
+                            placeholder="Buscar por nombre, apellido, teléfono o email..."
+                            class="w-full rounded-xl border border-amber-200 px-4 py-3 pr-12 focus:border-amber-500 focus:ring-amber-500">
+
+                        <button
+                            type="submit"
+                            class="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-lg hover:bg-amber-100 transition">
+
+                            <svg class="w-5 h-5 text-amber-700"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24">
+
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="m21 21-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" />
+
+                            </svg>
+
+                        </button>
+
+                    </div>
+
+                </form>
             </div>
 
             <div class="bg-white overflow-hidden rounded-2xl border border-amber-100 shadow-md">
@@ -159,7 +187,9 @@
                 @empty
                 <div class="bg-white rounded-2xl p-10 md:p-16 text-center border-2 border-dashed border-amber-200 shadow-inner m-4">
                     <div class="w-16 h-16 bg-amber-50 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-4 border border-amber-100">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
                     </div>
                     <h3 class="font-serif text-xl font-bold text-amber-950">No hay clientes registrados</h3>
                     <p class="mt-2 text-sm text-amber-800/60 max-w-sm mx-auto italic">Comienza agregando clientes usando el boton superior.</p>

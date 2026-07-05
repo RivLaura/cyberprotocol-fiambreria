@@ -35,34 +35,59 @@
         </div>
 
         <header class="relative z-10 px-6 py-5">
-            <div class="mx-auto flex max-w-6xl items-center justify-between gap-4">
-                <a href="{{ url('/') }}" class="flex items-center gap-3">
-                    <img src="{{ asset('images/logo.png') }}" alt="CyberProtocol" class="h-10 w-10 object-contain">
-                    <div>
-                        <p class="font-serif text-lg font-bold leading-tight text-amber-950">CyberProtocol</p>
-                        <p class="text-[11px] font-bold uppercase tracking-[0.22em] text-amber-700/70">Fiambrer&iacute;a</p>
-                    </div>
-                </a>
+            <div class="mx-auto flex max-w-6xl items-center justify-between">
+
+                {{-- Logo + Nosotros --}}
+                <div class="flex items-center gap-5">
+
+                    <a href="{{ url('/') }}" class="flex items-center gap-3">
+                        <img src="{{ asset('images/logo.png') }}"
+                            alt="CyberProtocol"
+                            class="h-10 w-10 object-contain">
+
+                        <div>
+                            <p class="font-serif text-lg font-bold leading-tight text-amber-950">
+                                CyberProtocol
+                            </p>
+                        </div>
+                    </a>
+
+                </div>
 
                 @if (Route::has('login'))
                 <nav class="flex items-center gap-3">
+
+                    <a href="{{ route('quienes-somos') }}"
+                        class="text-sm font-semibold text-amber-900 hover:text-amber-600 transition-colors">
+                        ¿Quiénes Somos?
+                    </a>
+
                     @auth
-                    <a href="{{ url('/dashboard') }}" class="inline-flex items-center justify-center rounded-lg bg-amber-700 px-5 py-2.5 text-sm font-bold text-white shadow-md shadow-amber-900/20 transition hover:bg-amber-600">
+
+                    <a href="{{ url('/dashboard') }}"
+                        class="inline-flex items-center justify-center rounded-lg bg-amber-700 px-5 py-2.5 text-sm font-bold text-white shadow-md shadow-amber-900/20 transition hover:bg-amber-600">
                         Ir al panel
                     </a>
+
                     @else
-                    <a href="{{ route('login') }}" class="inline-flex items-center justify-center rounded-lg border border-amber-300 bg-white/70 px-5 py-2.5 text-sm font-semibold text-amber-900 transition hover:border-amber-500 hover:bg-white">
+
+                    <a href="{{ route('login') }}"
+                        class="inline-flex items-center justify-center rounded-lg border border-amber-300 bg-white/70 px-5 py-2.5 text-sm font-semibold text-amber-900 transition hover:border-amber-500 hover:bg-white">
                         Ingresar
                     </a>
 
                     @if (Route::has('register'))
-                    <a href="{{ route('register') }}" class="hidden items-center justify-center rounded-lg bg-amber-700 px-5 py-2.5 text-sm font-bold text-white shadow-md shadow-amber-900/20 transition hover:bg-amber-600 sm:inline-flex">
+                    <a href="{{ route('register') }}"
+                        class="hidden sm:inline-flex items-center justify-center rounded-lg bg-amber-700 px-5 py-2.5 text-sm font-bold text-white shadow-md shadow-amber-900/20 transition hover:bg-amber-600">
                         Registrarse
                     </a>
                     @endif
+
                     @endauth
+
                 </nav>
                 @endif
+
             </div>
         </header>
 
@@ -74,7 +99,7 @@
                     </p>
 
                     <h1 class="max-w-xl font-serif text-5xl font-black leading-tight text-amber-950 sm:text-6xl">
-                        Gesti&oacute;n profesional para tu fiambrer&iacute;a
+                        Gesti&oacute;n profesional para tu fiambrer&iacute;a 
                     </h1>
 
                     <p class="mt-5 max-w-lg text-lg leading-8 text-stone-600">

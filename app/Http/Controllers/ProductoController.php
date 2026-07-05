@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Http\Requests\ProductoRequest;
 use App\Models\Producto;
 use App\Models\Categoria;
@@ -12,9 +13,14 @@ class ProductoController extends Controller
     /**
      * Muestra una lista de productos con su categoría y resalta aquellos con stock bajo.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $buscar = request('buscar');
+        $buscar = trim($request->input('buscar', ''));
+
+        $buscar = str($buscar)
+            ->ascii()
+            ->lower()
+            ->toString();
 
         $productos = Producto::with('categoria')
 

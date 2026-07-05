@@ -56,8 +56,7 @@
                 this.$dispatch('open-modal', 'product-form');
             }
         }"
-        class="py-12 bg-amber-50/40 min-h-screen"
-    >
+        class="py-12 bg-amber-50/40 min-h-screen">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
             @if (session('success'))
@@ -222,6 +221,94 @@
 
                 <div class="p-6 space-y-5">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div class="rounded-xl border border-amber-200 bg-amber-50/40 p-5">
+
+                            <div class="flex items-center gap-3 mb-4">
+
+                                <div class="w-10 h-10 rounded-lg bg-amber-600 flex items-center justify-center text-white">
+                                    🔎
+                                </div>
+
+                                <div>
+
+                                    <h4 class="font-serif font-bold text-amber-900">
+                                        Buscar producto
+                                    </h4>
+
+                                    <p class="text-xs text-gray-500 mt-2">
+
+                                        Escaneá o escribí el código del producto para completar automáticamente el formulario.
+
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                            <div class="flex gap-3">
+
+                                <label
+                                    class="block text-xs uppercase font-bold tracking-wider text-amber-900 mb-2">
+
+                                    Código de barras
+
+                                </label>
+
+                                <input
+                                    id="codigo_barras"
+                                    type="text"
+                                    class="flex-1 rounded-xl border-amber-200"
+                                    placeholder="7622210449283">
+
+                                <button
+                                    id="buscarProducto"
+                                    type="button"
+                                    class="
+                                            px-8
+                                            rounded-xl
+                                            bg-amber-600
+                                            hover:bg-amber-700
+                                            text-white
+                                            font-semibold
+                                            shadow-md
+                                    ">
+
+                                    Buscar
+
+                                </button>
+
+                            </div>
+
+                            <div
+                                id="previewProducto"
+                                class="hidden mt-4 rounded-xl border border-amber-200 bg-white p-4">
+
+                                <div class="flex gap-4 items-center">
+
+                                    <img
+                                        id="previewImagen"
+                                        class="hidden w-20 h-20 rounded-xl border object-cover">
+
+                                    <div>
+
+                                        <div
+                                            id="previewNombre"
+                                            class="font-bold text-amber-900">
+                                        </div>
+
+                                        <div
+                                            id="previewMarca"
+                                            class="text-sm text-gray-600">
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
                         <div>
                             <label for="modal-nombre" class="block text-xs font-serif uppercase tracking-wider text-amber-950 font-bold mb-2">Nombre del producto</label>
                             <input type="text" name="nombre" id="modal-nombre" x-model="form.nombre" required maxlength="100" placeholder="Ej: Salmón Premium"
@@ -308,4 +395,60 @@
             </form>
         </x-modal>
     </div>
+
+    <script>
+        document.addEventListener('click', async function(e) {
+
+            if (e.target.id !== 'buscarProducto') return;
+
+            const codigo = document.getElementById('codigo_barras').value.trim();
+
+            if (!codigo) {
+
+                alert('Ingrese un código.');
+
+                return;
+
+            }
+
+            try {
+
+                const response = await fetch('/openfoodfacts/' + codigo);
+
+                const data = await response.json();
+
+                if (!data.success) {
+
+                    alert(data.message);
+
+                    return;
+
+                }
+
+                document.getElementById('modal-nombre').value = data.producto.nombre;
+
+                document.getElementById('previewNombre').textContent = data.producto.nombre;
+
+                document.getElementById('previewMarca').textContent = data.producto.marca;
+
+                if (data.producto.imagen) {
+
+                    const img = document.getElementById('previewImagen');
+
+                    img.src = data.producto.imagen;
+
+                    img.classList.remove('hidden');
+
+                }
+
+                document.getElementById('previewProducto').classList.remove('hidden');
+
+            } catch (error) {
+
+                console.error(error);
+
+            }
+
+        });
+    </script>
 </x-app-layout>

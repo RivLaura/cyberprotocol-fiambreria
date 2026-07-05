@@ -1,6 +1,6 @@
-<aside class="fixed left-0 top-16 bottom-0 w-56 bg-gradient-to-b from-amber-900 to-stone-800 shadow-lg z-30">
+<aside class="fixed left-0 top-16 bottom-0 w-56 bg-gradient-to-b from-amber-900 to-stone-800 shadow-lg z-30 flex flex-col">
 
-    <nav class="mt-8">
+    <nav class="mt-8 flex-1">
 
         <ul class="space-y-1 px-3">
 
@@ -78,4 +78,51 @@
 
     </nav>
 
+    {{-- Cotización del dólar --}}
+    @isset($dolar)
+
+    <div class="mx-3 mt-20 mb-4 rounded-xl border border-amber-700/40 bg-amber-950/40 p-4 shadow-lg">
+
+        <div class="flex items-center gap-2 mb-3">
+
+            <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 8c-1.657 0-3 1.343-3 3s1.343 3 3 3 3 1.343 3 3-1.343 3-3 3m0-12V4m0 16v-1" />
+            </svg>
+
+            <span class="text-xs font-bold uppercase tracking-wider text-amber-300">
+                Dólar Oficial
+            </span>
+
+        </div>
+
+        <div class="space-y-2 text-sm">
+
+            <div class="flex justify-between">
+                <span class="text-amber-100/70">Compra</span>
+                <span class="font-bold text-white">
+                    $ {{ number_format($dolar['compra'], 2, ',', '.') }}
+                </span>
+            </div>
+
+            <div class="flex justify-between">
+                <span class="text-amber-100/70">Venta</span>
+                <span class="font-bold text-green-400">
+                    $ {{ number_format($dolar['venta'], 2, ',', '.') }}
+                </span>
+            </div>
+
+            <p class="mt-3 text-[10px] text-center text-amber-200/60">
+                Actualizado:
+                {{ \Carbon\Carbon::parse($dolar['fechaActualizacion'])
+                    ->setTimezone('America/Argentina/Cordoba')
+                    ->format('d/m/Y H:i') }}
+            </p>
+        </div>
+
+    </div>
+
+    @endif
 </aside>
