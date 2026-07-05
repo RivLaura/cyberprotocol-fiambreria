@@ -63,16 +63,16 @@
 
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-            <div class="bg-gradient-to-r from-amber-800 to-amber-950 p-6 rounded-xl shadow-lg mb-6">
-                <div class="flex justify-between items-center w-full">
+            <div class="bg-gradient-to-r from-amber-800 to-amber-950 p-4 sm:p-6 rounded-xl shadow-lg mb-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center w-full gap-4">
 
                     <div>
 
-                        <h1 class="font-serif text-5xl font-bold text-white leading-none tracking-wide drop-shadow-md">
+                        <h1 class="font-serif text-3xl sm:text-5xl font-bold text-white leading-none tracking-wide drop-shadow-md">
                             Punto de Venta
                         </h1>
 
-                        <p class="mt-2 text-base text-amber-200 font-medium">
+                        <p class="mt-2 text-sm sm:text-base text-amber-200 font-medium">
                             Seleccione los productos para comenzar una nueva venta.
                         </p>
                         
@@ -82,26 +82,26 @@
 
                     @isset($clima)
 
-                    <div class="text-right rounded-xl px-5 py-3 border border-white/10 backdrop-blur-sm">
+                    <div class="text-left sm:text-right rounded-xl px-4 sm:px-5 py-3 border border-white/10 backdrop-blur-sm w-full sm:w-auto">
 
-                        <div class="text-xs uppercase tracking-[0.2em] text-amber-300 font-bold">
+                        <div class="text-[10px] sm:text-xs uppercase tracking-[0.2em] text-amber-300 font-bold">
 
                             {{ $estadoClima['icono'] }}
                             {{ strtoupper($clima['ciudad']) }}
 
                         </div>
 
-                        <div class="text-4xl font-bold text-white leading-none mt-1">
+                        <div class="text-2xl sm:text-4xl font-bold text-white leading-none mt-1">
 
                             {{ round($clima['datos']['current']['temperature_2m']) }}°
 
                         </div>
 
-                        <p class="text-xs text-amber-200 mt-1 tracking-wide">
+                        <p class="text-[11px] sm:text-xs text-amber-200 mt-1 tracking-wide">
                             {{ $estadoClima['descripcion'] }}
                         </p>
 
-                        <div class="mt-2 flex justify-end gap-4 text-sm text-amber-100">
+                        <div class="mt-2 flex justify-start sm:justify-end gap-4 text-xs sm:text-sm text-amber-100">
 
                             <span>💧 {{ $clima['datos']['current']['relative_humidity_2m'] }}%</span>
 
@@ -139,17 +139,17 @@
         </div>
         @endif
 
-        <div class="grid grid-cols-12 gap-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
             <!-- PANEL IZQUIERDO -->
-            <section class="col-span-8">
+            <section class="lg:col-span-8">
 
                 <livewire:pos.catalogo-productos />
 
             </section>
 
             <!-- PANEL DERECHO -->
-            <aside class="col-span-4">
+            <aside class="lg:col-span-4">
 
                 <div class="bg-white overflow-hidden rounded-2xl border border-amber-100 shadow-md sticky top-6">
 

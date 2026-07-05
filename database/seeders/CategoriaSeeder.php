@@ -9,7 +9,7 @@ use App\Models\Categoria;
 class CategoriaSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Ejecuta las semillas de la base de datos.
      */
     public function run(): void
     {

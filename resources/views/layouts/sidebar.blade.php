@@ -1,4 +1,4 @@
-<aside class="fixed left-0 top-16 bottom-0 w-56 bg-gradient-to-b from-amber-900 to-stone-800 shadow-lg z-30 flex flex-col">
+<aside class="fixed left-0 top-16 bottom-0 w-56 bg-gradient-to-b from-amber-900 to-stone-800 shadow-lg z-30 flex flex-col transition-transform duration-300 ease-in-out -translate-x-full md:translate-x-0" :class="{ 'translate-x-0': sidebarOpen }" x-cloak>
 
     <nav class="mt-8 flex-1">
 

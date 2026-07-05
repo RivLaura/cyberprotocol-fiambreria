@@ -14,7 +14,7 @@ $scrollIntoViewJsSnippet = ($scrollTo !== false)
     @if ($paginator->hasPages())
         <nav role="navigation" aria-label="Navegación de páginas">
 
-            {{-- Mobile view --}}
+            {{-- Vista móvil --}}
             <div class="flex gap-2 items-center justify-between sm:hidden">
                 <span>
                     @if ($paginator->onFirstPage())
@@ -41,7 +41,7 @@ $scrollIntoViewJsSnippet = ($scrollTo !== false)
                 </span>
             </div>
 
-            {{-- Desktop view --}}
+            {{-- Vista de escritorio --}}
             <div class="hidden sm:flex sm:flex-1 sm:gap-2 sm:items-center sm:justify-between">
                 <div>
                     <p class="text-sm text-amber-950/70 leading-5">
@@ -57,7 +57,7 @@ $scrollIntoViewJsSnippet = ($scrollTo !== false)
 
                 <div class="inline-flex items-center gap-1.5 bg-amber-50/40 border border-amber-100 rounded-2xl px-3 py-2 shadow-sm">
                     <span>
-                        {{-- Previous Page Link --}}
+                        {{-- Enlace de página anterior --}}
                         @if ($paginator->onFirstPage())
                             <span aria-disabled="true" aria-label="Anterior">
                                 <span class="inline-flex items-center justify-center w-8 h-8 text-sm font-medium text-amber-300 bg-white border border-amber-200 cursor-not-allowed rounded-xl leading-5 shadow-sm" aria-hidden="true">
@@ -75,16 +75,16 @@ $scrollIntoViewJsSnippet = ($scrollTo !== false)
                         @endif
                     </span>
 
-                    {{-- Pagination Elements --}}
+                    {{-- Elementos de paginación --}}
                     @foreach ($elements as $element)
-                        {{-- "Three Dots" Separator --}}
+                        {{-- Separador de puntos suspensivos --}}
                         @if (is_string($element))
                             <span aria-disabled="true">
                                 <span class="inline-flex items-center justify-center w-8 h-8 text-sm font-medium text-amber-400 bg-transparent cursor-default rounded-xl leading-5">{{ $element }}</span>
                             </span>
                         @endif
 
-                        {{-- Array Of Links --}}
+                        {{-- Array de enlaces --}}
                         @if (is_array($element))
                             @foreach ($element as $page => $url)
                                 <span wire:key="paginator-{{ $paginator->getPageName() }}-page{{ $page }}">
@@ -103,7 +103,7 @@ $scrollIntoViewJsSnippet = ($scrollTo !== false)
                     @endforeach
 
                     <span>
-                        {{-- Next Page Link --}}
+                        {{-- Enlace de página siguiente --}}
                         @if ($paginator->hasMorePages())
                             <button type="button" wire:click="nextPage('{{ $paginator->getPageName() }}')" x-on:click="{{ $scrollIntoViewJsSnippet }}" dusk="nextPage{{ $paginator->getPageName() == 'page' ? '' : '.' . $paginator->getPageName() }}.after" class="inline-flex items-center justify-center w-8 h-8 text-sm font-medium text-amber-950 bg-white border border-amber-100 rounded-xl leading-5 shadow-sm hover:bg-amber-100 hover:text-amber-900 hover:border-amber-200 focus:outline-none focus:ring-2 focus:ring-amber-500/50 active:bg-amber-200 transition-all duration-150 cursor-pointer" aria-label="Siguiente">
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">

@@ -38,6 +38,14 @@
                 this.formAction = '{{ url('categorias') }}/' + categoria.id;
                 this.editId = categoria.id;
                 this.$dispatch('open-modal', 'category-form');
+            },
+
+            deleteUrl: '',
+            deleteItem: '',
+            confirmDelete(url, item) {
+                this.deleteUrl = url;
+                this.deleteItem = item;
+                this.$dispatch('open-modal', 'confirm-delete');
             }
         }"
         class="py-12 bg-amber-50/40 min-h-screen"
@@ -103,16 +111,14 @@
                                         </svg>
                                         Editar
                                     </button>
-                                    <form action="{{ route('categorias.destroy', $categoria->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar esta categoría?')" class="inline-block">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="inline-flex items-center px-3.5 py-2 bg-white text-red-600 hover:bg-red-50 rounded-lg border border-gray-200 hover:border-red-200 shadow-sm transition-all duration-150 cursor-pointer">
-                                            <svg class="w-3.5 h-3.5 mr-1 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                            </svg>
-                                            Eliminar
-                                        </button>
-                                    </form>
+                                    <button type="button"
+                                        @click="confirmDelete('{{ route('categorias.destroy', $categoria->id) }}', '{{ $categoria->nombre }}')"
+                                        class="inline-flex items-center px-3.5 py-2 bg-white text-red-600 hover:bg-red-50 rounded-lg border border-gray-200 hover:border-red-200 shadow-sm transition-all duration-150 cursor-pointer">
+                                        <svg class="w-3.5 h-3.5 mr-1 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                        </svg>
+                                        Eliminar
+                                    </button>
                                 </div>
                             </td>
                         </tr>
@@ -137,6 +143,40 @@
 
             </div>
         </div>
+
+        {{-- Modal de confirmación de eliminación --}}
+        <x-modal name="confirm-delete" maxWidth="sm">
+            <form :action="deleteUrl" method="POST">
+                @csrf
+                @method('DELETE')
+
+                <div class="p-6 text-center">
+                    <div class="mx-auto mb-4 w-14 h-14 rounded-full bg-red-100 flex items-center justify-center">
+                        <svg class="w-7 h-7 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                        </svg>
+                    </div>
+
+                    <h3 class="font-serif text-lg font-bold text-gray-900 mb-2">Eliminar categoría</h3>
+                    <p class="text-sm text-gray-500 mb-1">¿Estás seguro de que deseas eliminar esta categoría? Esta acción no se puede deshacer.</p>
+                    <p x-text="'\u201C' + deleteItem + '\u201D'" class="text-sm font-bold text-amber-800 bg-amber-50 rounded-lg px-3 py-1.5 inline-block mt-1"></p>
+                </div>
+
+                <div class="flex items-center justify-center gap-3 px-6 py-4 border-t border-gray-100 bg-gray-50/50 rounded-b-2xl">
+                    <button type="button" @click="$dispatch('close-modal', 'confirm-delete')"
+                        class="px-5 py-2.5 bg-white hover:bg-gray-50 text-gray-700 text-sm font-medium rounded-xl border border-gray-200 shadow-sm transition-all duration-150 cursor-pointer">
+                        Cancelar
+                    </button>
+                    <button type="submit"
+                        class="inline-flex items-center px-5 py-2.5 bg-red-600 hover:bg-red-500 text-white text-sm font-bold rounded-xl shadow-md hover:shadow-red-500/20 transform hover:-translate-y-0.5 transition-all duration-200 cursor-pointer">
+                        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                        Eliminar
+                    </button>
+                </div>
+            </form>
+        </x-modal>
 
         {{-- Modal de creación/edición de categorías --}}
         <x-modal name="category-form" maxWidth="lg">

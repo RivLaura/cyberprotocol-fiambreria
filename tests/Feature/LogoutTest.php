@@ -10,7 +10,7 @@ class LogoutTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_user_can_logout_successfully(): void
+    public function test_usuario_puede_cerrar_sesion_exitosamente(): void
     {
         $user = User::factory()->create();
 
@@ -22,7 +22,7 @@ class LogoutTest extends TestCase
         $this->assertGuest();
     }
 
-    public function test_session_is_destroyed_after_logout(): void
+    public function test_la_sesion_se_destruye_despues_de_cerrar_sesion(): void
     {
         $user = User::factory()->create();
 
@@ -32,7 +32,7 @@ class LogoutTest extends TestCase
         $this->assertGuest();
     }
 
-    public function test_authenticated_routes_are_inaccessible_after_logout(): void
+    public function test_las_rutas_autenticadas_son_inaccesibles_despues_de_cerrar_sesion(): void
     {
         $user = User::factory()->create();
 
