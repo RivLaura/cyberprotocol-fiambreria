@@ -1,0 +1,42 @@
+services:
+  - type: web
+    name: cyberprotocol-fiambreria
+    runtime: php
+    region: oregon
+    branch: produccion
+    buildCommand: composer install --no-dev && npm ci && npm run build
+    startCommand: ./start.sh
+    healthCheckPath: /up
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_KEY
+        sync: false
+      - key: APP_URL
+        value: https://cyberprotocol-fiambreria.onrender.com
+      - key: DB_CONNECTION
+        value: sqlite
+      - key: DB_DATABASE
+        value: /data/database.sqlite
+      - key: SESSION_DRIVER
+        value: database
+      - key: CACHE_STORE
+        value: database
+      - key: QUEUE_CONNECTION
+        value: database
+      - key: LOG_LEVEL
+        value: warning
+      - key: SESSION_ENCRYPT
+        value: true
+      - key: APP_LOCALE
+        value: es
+      - key: APP_FALLBACK_LOCALE
+        value: es
+      - key: APP_FAKER_LOCALE
+        value: es_ES
+    disk:
+      name: sqlite-data
+      mountPath: /data
+      sizeGB: 1
