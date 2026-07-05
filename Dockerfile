@@ -30,11 +30,13 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-av
 
 EXPOSE 8080
 
-CMD mkdir -p /data && touch /data/database.sqlite && \
-    php artisan migrate --force && \
-    php artisan config:cache && \
-    php artisan route:cache && \
-    php artisan view:cache && \
-    php artisan event:cache && \
+CMD mkdir -p /data && chown www-data:www-data /data && \
+    touch /data/database.sqlite && chown www-data:www-data /data/database.sqlite && \
+    php artisan storage:link --force 2>&1 || true && \
+    php artisan migrate --force 2>&1 && \
+    php artisan config:cache 2>&1 && \
+    php artisan route:cache 2>&1 && \
+    php artisan view:cache 2>&1 && \
+    php artisan event:cache 2>&1 && \
     sed -i "s/80/${PORT:-8080}/g" /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf && \
     apache2-foreground
