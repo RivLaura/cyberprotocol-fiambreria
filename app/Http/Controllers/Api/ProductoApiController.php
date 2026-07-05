@@ -90,4 +90,19 @@ class ProductoApiController extends Controller
             'data' => new ProductoResource($producto),
         ], 200);
     }
+
+    public function stockBajo()
+    {
+        $productos = Producto::with('categoria')
+            ->whereColumn('stock', '<=', 'stock_minimo')
+            ->orderBy('nombre')
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Productos con stock bajo.',
+            'total' => $productos->count(),
+            'data' => ProductoResource::collection($productos),
+        ]);
+    }
 }
