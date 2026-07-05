@@ -8,7 +8,7 @@ use App\Models\Categoria;
 class CategoriaController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Muestra una lista de las categorías.
      */
     public function index()
 {
@@ -18,7 +18,7 @@ class CategoriaController extends Controller
 }
 
     /**
-     * Show the form for creating a new resource.
+     * Muestra el formulario para crear una nueva categoría.
      */
     public function create()
     {
@@ -26,7 +26,7 @@ class CategoriaController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Almacena una categoría recién creada en la base de datos.
      */
     public function store(CategoriaRequest $request)
     {
@@ -41,7 +41,7 @@ class CategoriaController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Muestra la categoría especificada.
      */
     public function show(string $id)
     {
@@ -49,7 +49,7 @@ class CategoriaController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Muestra el formulario para editar la categoría especificada.
      */
    public function edit(Categoria $categoria)
     {
@@ -57,7 +57,7 @@ class CategoriaController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualiza la categoría especificada en la base de datos.
      */
     public function update(CategoriaRequest $request, Categoria $categoria)
     {
@@ -72,7 +72,7 @@ class CategoriaController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Elimina la categoría especificada de la base de datos.
      */
     public function destroy(Categoria $categoria)
     {

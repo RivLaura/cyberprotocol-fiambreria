@@ -18,8 +18,8 @@ class DatabaseSeeder extends Seeder
         // usuario de prueba
 
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Usuario de Prueba',
+            'email' => 'prueba@ejemplo.com',
         ]);
 
         // seed de categorias
