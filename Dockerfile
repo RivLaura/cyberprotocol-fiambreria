@@ -17,9 +17,10 @@ WORKDIR /var/www/html
 
 COPY . .
 
-RUN composer install --no-dev --optimize-autoloader && \
-    npm ci && npm run build && \
-    chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+RUN composer install --no-dev --optimize-autoloader --no-interaction
+RUN npm ci --loglevel verbose
+RUN npm run build 2>&1
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
 # Configurar Apache para servir desde /public
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
