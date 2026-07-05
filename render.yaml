@@ -1,11 +1,10 @@
 services:
   - type: web
     name: cyberprotocol-fiambreria
-    runtime: php
+    runtime: docker
     region: oregon
     branch: produccion
-    buildCommand: composer install --no-dev && npm ci && npm run build
-    startCommand: ./start.sh
+    dockerfilePath: ./Dockerfile
     healthCheckPath: /up
     envVars:
       - key: APP_ENV
