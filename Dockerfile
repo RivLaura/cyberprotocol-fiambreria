@@ -6,8 +6,10 @@ RUN a2enmod rewrite
 # Instalar extensiones PHP y herramientas
 RUN apt-get update && apt-get install -y \
     git unzip curl libpng-dev libonig-dev libxml2-dev \
-    libzip-dev libsqlite3-dev nodejs npm \
-    && docker-php-ext-install pdo_sqlite mbstring exif pcntl bcmath gd zip \
+    libzip-dev libsqlite3-dev libcurl4-openssl-dev nodejs npm \
+    && docker-php-ext-install -j$(nproc) \
+        pdo_sqlite mbstring exif pcntl bcmath gd zip \
+        ctype fileinfo tokenizer xml json \
     && pecl install redis && docker-php-ext-enable redis \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
@@ -17,8 +19,9 @@ WORKDIR /var/www/html
 
 COPY . .
 
-RUN composer install --no-dev --optimize-autoloader --no-interaction
-RUN npm ci --loglevel verbose
+RUN php -v && php -m && composer diagnose --no-interaction
+RUN composer install --no-dev --optimize-autoloader --no-interaction 2>&1
+RUN npm ci --loglevel verbose 2>&1
 RUN npm run build 2>&1
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
