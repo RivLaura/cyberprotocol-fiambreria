@@ -4,14 +4,12 @@ FROM php:8.3-apache
 RUN a2enmod rewrite
 
 # Instalar extensiones PHP y herramientas
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     git unzip curl libpng-dev libonig-dev libxml2-dev \
     libzip-dev libsqlite3-dev libcurl4-openssl-dev nodejs npm \
-    && docker-php-ext-install -j$(nproc) \
-        pdo_sqlite mbstring exif pcntl bcmath gd zip \
-        ctype fileinfo tokenizer xml json \
-    && pecl install redis && docker-php-ext-enable redis \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+RUN docker-php-ext-install -j$(nproc) pdo_sqlite mbstring exif pcntl bcmath gd zip
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
