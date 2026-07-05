@@ -82,7 +82,7 @@ Route::middleware('auth')->group(function () {
         ->name('clientes.store');
 
     Route::get('/clientes/{cliente}/edit', [ClienteController::class, 'edit'])
-        ->name('clientes.edit');
+    ->name('clientes.edit');
 
     Route::put('/clientes/{cliente}', [ClienteController::class, 'update'])
         ->name('clientes.update');
@@ -94,17 +94,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/ventas', [VentaController::class, 'index'])
         ->name('ventas.index');
 
-    Route::get('/ventas/export/excel', [VentaController::class, 'exportExcel'])
-        ->name('ventas.export.excel');
-
-    Route::get('/ventas/{venta}', [VentaController::class, 'show'])
-        ->name('ventas.show');
-
-    Route::get('/ventas/create', [VentaController::class, 'create'])
-        ->name('ventas.create');
+    Route::get('/ventas/crear', [VentaController::class, 'create'])
+    ->name('ventas.create');
 
     Route::post('/ventas', [VentaController::class, 'store'])
         ->name('ventas.store');
+
+    // Exportar ventas a Excel
+    Route::get('/ventas/export/excel', [VentaController::class, 'exportExcel'])
+    ->name('ventas.export.excel');
 
     // CARRITO
     Route::post('/carrito/agregar', [CarritoController::class, 'add'])
@@ -119,6 +117,9 @@ Route::middleware('auth')->group(function () {
     // PROCESAR VENTA
     Route::post('/ventas/procesar', [VentaProcesoController::class, 'store'])
         ->name('ventas.procesar');
+
+    Route::get('/ventas/{venta}', [VentaController::class, 'show'])
+    ->name('ventas.show');
 });
 
 require __DIR__ . '/auth.php';
