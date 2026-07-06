@@ -181,16 +181,18 @@ class ProductoSeeder extends Seeder
 
         foreach ($productos as $producto) {
 
-            Producto::create([
-                'nombre' => $producto['nombre'],
-                'descripcion' => 'Producto disponible para la venta.',
-                'precio' => $producto['precio'],
-                'stock' => $producto['stock'],
-                'stock_minimo' => $producto['stock_minimo'],
-                'fecha_elaboracion' => now()->subDays(rand(1, 20)),
-                'fecha_vencimiento' => now()->addMonths(rand(1, 6)),
-                'categoria_id' => $producto['categoria_id'],
-            ]);
+            Producto::firstOrCreate(
+                ['nombre' => $producto['nombre']],
+                [
+                    'descripcion' => 'Producto disponible para la venta.',
+                    'precio' => $producto['precio'],
+                    'stock' => $producto['stock'],
+                    'stock_minimo' => $producto['stock_minimo'],
+                    'fecha_elaboracion' => now()->subDays(rand(1, 20)),
+                    'fecha_vencimiento' => now()->addMonths(rand(1, 6)),
+                    'categoria_id' => $producto['categoria_id'],
+                ],
+            );
         }
     }
 }
